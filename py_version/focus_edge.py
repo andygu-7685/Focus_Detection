@@ -5,6 +5,16 @@ import cv2
 import numpy as np
 
 
+
+
+
+# Initialize the meter
+cvtimer = cv2.TickMeter()
+
+
+
+
+
 def count_non_black_pixels(img: np.ndarray) -> int:
     if img is None:
         return 0
@@ -100,11 +110,13 @@ def build_parser():
     p.add_argument('image', help='Input image path')
     p.add_argument('--out', '-o', help='Output image path (default: input_blockavg_NxN.png)', default=None)
     p.add_argument('--block-size', type=int, default=6, help='Block size N (default 6)')
+    p.add_argument('--threshold', type=int, default=180, help='Gray Scale Threshold')
     p.add_argument('--show', action='store_true', help='Show result in a window')
     return p
 
 
 def main():
+    cvtimer.start()
     args = build_parser().parse_args()
 
     img = cv2.imread(args.image, cv2.IMREAD_UNCHANGED)
@@ -119,16 +131,20 @@ def main():
 
     out_img = increase_contrast(gray, method='clahe', clip_limit=4.0, tile_grid_size=(8, 8))
     out_img = block_average_gray(out_img, block_size=args.block_size)
-    out_img = threshold_to_black(out_img, thresh=180)
+    out_img = threshold_to_black(out_img, thresh=args.threshold)
     non_black_pixel = count_non_black_pixels(out_img)
 
     print(f'Non-black pixels: {non_black_pixel * 100/ 3000:.2f}%')
     if non_black_pixel * 100/ 3000 > 100:
         print('The Camera is focused')
     elif non_black_pixel * 100/ 3000 > 75:
-        print('The Camera is likelyfocused')
+        print('The Camera is likely focused')
     else:
         print('The Camera is likely not focused')
+
+    cvtimer.stop()
+    print(f"Time in milliseconds: {cvtimer.getTimeMilli()}")
+
 
     if args.out:
         out_path = args.out
