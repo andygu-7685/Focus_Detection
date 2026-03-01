@@ -50,17 +50,44 @@ static Mat block_average_gray(const Mat &gray, int block_size = 6) {
 
 static Ptr<CLAHE> global_clahe = createCLAHE(4.0, Size(8,8));
 
+// static Mat increase_contrast(const Mat &image, const string &method = "clahe") {
+//     if (image.empty()) return image;
+//     if (image.channels() == 1) {
+//         Mat gray = image;
+        
+//         Mat dst;
+//         cvtimer.start();
+//         global_clahe->apply(gray, dst); 
+//         cvtimer.stop();
+//         return dst;
+//     }
+//     return image; 
+// }
+
+
 static Mat increase_contrast(const Mat &image, const string &method = "clahe") {
     if (image.empty()) return image;
+    
+    // 1. If it's already grayscale, proceed
     if (image.channels() == 1) {
-        Mat gray = image;
+        // 2. Upload CPU Mat to GPU UMat
+        // This is where the data moves to the Intel Graphics memory
+        UMat u_gray = image.getUMat(ACCESS_READ);
+        UMat u_dst;
+
+        //cvtimer.start();
         
+        // 3. This execution now happens on the GPU
+        global_clahe->apply(u_gray, u_dst); 
+        
+        //cvtimer.stop();
+
+        // 4. Download result back to a CPU Mat to return it
         Mat dst;
-        cvtimer.start();
-        global_clahe->apply(gray, dst); 
-        cvtimer.stop();
+        u_dst.copyTo(dst);
         return dst;
     }
+    
     return image; 
 }
 
@@ -90,7 +117,7 @@ static void print_usage(const char* prog) {
 pair<double, Mat> focus_score(const Mat& img, int block_size = 6, int threshold_val = 180) {
 
     cvtimer.reset();
-    //cvtimer.start();
+    cvtimer.start();
 
     Mat gray;
     if (img.channels() == 3) cvtColor(img, gray, COLOR_BGR2GRAY);
@@ -105,7 +132,7 @@ pair<double, Mat> focus_score(const Mat& img, int block_size = 6, int threshold_
     double pct = non_black_pixel * 100.0 / 3000.0;
     cout.setf(std::ios::fixed); cout.precision(2);
 
-    //cvtimer.stop();
+    cvtimer.stop();
 
     cout << "Time in milli: " << cvtimer.getTimeMilli() << endl;
     return make_pair(pct, out_img);
