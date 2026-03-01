@@ -26,47 +26,6 @@ static int count_non_black_pixels(const Mat &img) {
     return count;
 }
 
-// static Mat block_average_gray(const Mat &gray, int block_size = 6) {
-//     CV_Assert(gray.type() == CV_8UC1);
-    
-//     Mat out = gray.clone();
-//     int h = gray.rows;
-//     int w = gray.cols;
-//     int bs = std::max(1, block_size);
-
-//     for (int y = 0; y < h; y += bs) {
-//         // Calculate remaining height to avoid going out of bounds
-//         int block_h = std::min(bs, h - y);
-        
-//         for (int x = 0; x < w; x += bs) {
-//             int block_w = std::min(bs, w - x);
-            
-//             // Define the rectangle correctly
-//             Rect r(x, y, block_w, block_h);
-            
-//             // Create the ROI (Region of Interest)
-//             Mat block = gray(r).clone(); // This ensures the data starts at an aligned address
-//             double sum = 0;
-//             int count = 0;
-//             for (int i = 0; i < block.rows; i++) {
-//                 for (int j = 0; j < block.cols; j++) {
-//                     sum += block.at<uchar>(i, j);
-//                     count++;
-//                 }
-//             }
-//             double meanVal = sum / count;
-//             out(r).setTo((uchar)std::round(meanVal));
-            
-//             // Use the ROI of the output matrix to set the value
-//             Mat out_roi = out(r);
-//             out_roi.setTo(meanVal); 
-//         }
-//     }
-//     return out;
-// }
-
-
-
 static Mat block_average_gray(const Mat &gray, int block_size = 6) {
     CV_Assert(gray.type() == CV_8UC1);
     int bs = std::max(1, block_size);
@@ -95,9 +54,7 @@ static Mat increase_contrast(const Mat &image, const string &method = "clahe") {
     if (image.empty()) return image;
     if (image.channels() == 1) {
         Mat gray = image;
-        // if (method == "hist") {
-        //     Mat dst; equalizeHist(gray, dst); return dst;
-        // }
+        
         Mat dst;
         cvtimer.start();
         global_clahe->apply(gray, dst); 
@@ -105,49 +62,17 @@ static Mat increase_contrast(const Mat &image, const string &method = "clahe") {
         return dst;
     }
     return image; 
-
-
-    // // Color image (BGR)
-    // if (method == "hist") {
-    //     Mat ycrcb; cvtColor(image, ycrcb, COLOR_BGR2YCrCb);
-    //     std::vector<Mat> ch; split(ycrcb, ch);
-    //     Mat y_eq; equalizeHist(ch[0], y_eq);
-    //     ch[0] = y_eq;
-    //     Mat merged; merge(ch, merged);
-    //     Mat out; cvtColor(merged, out, COLOR_YCrCb2BGR);
-    //     return out;
-    // }
-
-    // Mat lab; cvtColor(image, lab, COLOR_BGR2Lab);
-    // std::vector<Mat> labch; split(lab, labch);
-    // Ptr<CLAHE> clahe = createCLAHE(clip_limit, tile_grid_size);
-    // Mat l_clahe; clahe->apply(labch[0], l_clahe);
-    // labch[0] = l_clahe;
-    // Mat lab_clahe; merge(labch, lab_clahe);
-    // Mat out; cvtColor(lab_clahe, out, COLOR_Lab2BGR);
-    // return out;
 }
 
 static Mat threshold_to_black(const Mat &img, int thresh = 150) {
     if (img.empty()) return img;
     Mat out = img.clone();
-    if (out.channels() == 3) {
-        // Mat gray; cvtColor(out, gray, COLOR_BGR2GRAY);
-        // for (int y = 0; y < out.rows; ++y) {
-        //     const uchar* gp = gray.ptr<uchar>(y);
-        //     Vec3b* bp = out.ptr<Vec3b>(y);
-        //     for (int x = 0; x < out.cols; ++x) {
-        //         if (gp[x] < thresh) bp[x] = Vec3b(0,0,0);
-        //     }
-        // }
-        // return out;
-    } else {
+    if (out.channels() != 3) {
         // single channel
         for (int y = 0; y < out.rows; ++y) {
             uchar* p = out.ptr<uchar>(y);
             for (int x = 0; x < out.cols; ++x) if (p[x] < thresh) p[x] = 0;
         }
-        return out;
     }
     return out;
 }
@@ -189,69 +114,6 @@ pair<double, Mat> focus_score(const Mat& img, int block_size = 6, int threshold_
 
 
 
-
-
-
-
-
-
-// int main(int argc, char** argv) {
-//     if (argc < 2) { print_usage(argv[0]); return 1; }
-    
-//     string image_path;
-//     string out_path;
-//     int block_size = 6;
-//     int threshold_val = 180;
-//     bool show = false;
-
-//     image_path = argv[1];
-//     for (int i = 2; i < argc; ++i) {
-//         string a = argv[i];
-//         if (a == "--out" && i + 1 < argc) { out_path = argv[++i]; }
-//         else if (a == "--block-size" && i + 1 < argc) { block_size = stoi(argv[++i]); }
-//         else if (a == "--threshold" && i + 1 < argc) { threshold_val = stoi(argv[++i]); }
-//         else if (a == "--show") { show = true; }
-//         else { cerr << "Unknown arg: " << a << "\n"; print_usage(argv[0]); return 1; }
-//     }
-
-//     Mat img = imread(image_path, IMREAD_UNCHANGED);
-//     if (img.empty()) { cerr << "Error: could not read image: " << image_path << "\n"; return 2; }
-
-
-//     //-----------------------------------------------------------------------------------------------------------
-
-//     pair<double, Mat> result = focus_score(img, block_size, threshold_val);
-//     double pct = result.first;
-//     Mat out_img = result.second;
-
-//     //-----------------------------------------------------------------------------------------------------------
-
-
-//     cout << "Non-black pixels: " << pct << "%\n";
-//     if (pct > 100) cout << "The Camera is focused\n";
-//     else if (pct > 75) cout << "The Camera is likely focused\n";
-//     else cout << "The Camera is likely not focused\n";
-
-//     if (out_path.empty()) {
-//         // create default output name
-//         size_t pos = image_path.find_last_of("/\\");
-//         string base = (pos==string::npos) ? image_path : image_path.substr(pos+1);
-//         size_t dot = base.find_last_of('.');
-//         if (dot != string::npos) base = base.substr(0, dot);
-//         out_path = base + "_blockavg_" + to_string(block_size) + "x" + to_string(block_size) + ".png";
-//     }
-
-//     imwrite(out_path, out_img);
-//     cout << "Wrote: " << out_path << "\n";
-
-//     if (show) {
-//         imshow("blockavg", out_img);
-//         waitKey(0);
-//         destroyAllWindows();
-//     }
-
-//     return 0;
-// }
 
 
 
