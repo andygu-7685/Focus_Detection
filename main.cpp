@@ -12,6 +12,8 @@ using namespace std;
 
 cv::TickMeter cvtimer;
 
+
+
 static int count_non_black_pixels(const Mat &img) {
     if (img.empty()) return 0;
     CV_Assert(img.type() == CV_8UC1); // Ensure it's grayscale
@@ -25,6 +27,8 @@ static int count_non_black_pixels(const Mat &img) {
     }
     return count;
 }
+
+
 
 static Mat block_average_gray(const Mat &gray, int block_size = 6) {
     CV_Assert(gray.type() == CV_8UC1);
@@ -47,23 +51,7 @@ static Mat block_average_gray(const Mat &gray, int block_size = 6) {
 
 
 
-
 static Ptr<CLAHE> global_clahe = createCLAHE(4.0, Size(8,8));
-
-// static Mat increase_contrast(const Mat &image, const string &method = "clahe") {
-//     if (image.empty()) return image;
-//     if (image.channels() == 1) {
-//         Mat gray = image;
-        
-//         Mat dst;
-//         cvtimer.start();
-//         global_clahe->apply(gray, dst); 
-//         cvtimer.stop();
-//         return dst;
-//     }
-//     return image; 
-// }
-
 
 static Mat increase_contrast(const Mat &image, const string &method = "clahe") {
     if (image.empty()) return image;
@@ -91,6 +79,8 @@ static Mat increase_contrast(const Mat &image, const string &method = "clahe") {
     return image; 
 }
 
+
+
 static Mat threshold_to_black(const Mat &img, int thresh = 150) {
     if (img.empty()) return img;
     Mat out = img.clone();
@@ -104,13 +94,11 @@ static Mat threshold_to_black(const Mat &img, int thresh = 150) {
     return out;
 }
 
+
+
 static void print_usage(const char* prog) {
     cout << "Usage: " << prog << " <folder> [--out path] [--block-size N] [--threshold T]\n";
 }
-
-
-
-
 
 
 
@@ -154,10 +142,9 @@ struct ImageScore {
 };
 
 int main(int argc, char** argv) {
-    //if (argc < 2) { print_usage(argv[0]); return 1; }
+    if (argc < 2) { print_usage(argv[0]); return 1; }
 
-    //string input_folder = argv[1];
-    string input_folder = "C:\\Users\\USER\\Documents\\Research\\Focus_Algo\\Stack";
+    string input_folder = argv[1];
     string output_folder = "output_images"; // Default output folder
     int block_size = 6;
     int threshold_val = 180;
