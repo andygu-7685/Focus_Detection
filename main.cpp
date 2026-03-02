@@ -31,6 +31,26 @@ static int count_non_black_pixels(const Mat &img) {
 
 
 
+// static Mat block_average_gray(const Mat &gray, int block_size = 6) {
+//     CV_Assert(gray.type() == CV_8UC1);
+//     int bs = std::max(1, block_size);
+
+//     // Calculate the size of the reduced image
+//     Size smallSize(gray.cols / bs, gray.rows / bs);
+//     if (smallSize.width == 0 || smallSize.height == 0) return gray.clone();
+
+//     // 1. Downscale: INTER_AREA is mathematically equivalent to your 'mean' loop
+//     Mat small;
+//     resize(gray, small, smallSize, 0, 0, INTER_AREA);
+
+//     // 2. Upscale: INTER_NEAREST stretches those averages back into blocks
+//     Mat out;
+//     resize(small, out, gray.size(), 0, 0, INTER_NEAREST);
+
+//     return out;
+// }
+
+
 static Mat block_average_gray(const Mat &gray, int block_size = 6) {
     CV_Assert(gray.type() == CV_8UC1);
     int bs = std::max(1, block_size);
@@ -39,15 +59,18 @@ static Mat block_average_gray(const Mat &gray, int block_size = 6) {
     Size smallSize(gray.cols / bs, gray.rows / bs);
     if (smallSize.width == 0 || smallSize.height == 0) return gray.clone();
 
-    // 1. Downscale: INTER_AREA is mathematically equivalent to your 'mean' loop
-    Mat small;
-    resize(gray, small, smallSize, 0, 0, INTER_AREA);
+    // 1. Move to UMat (GPU/OpenCL buffer)
+    UMat u_gray = gray.getUMat(ACCESS_READ);
+    UMat u_small, u_out;
 
-    // 2. Upscale: INTER_NEAREST stretches those averages back into blocks
-    Mat out;
-    resize(small, out, gray.size(), 0, 0, INTER_NEAREST);
+    // 2. Downscale: Handled by OpenCL kernel
+    resize(u_gray, u_small, smallSize, 0, 0, INTER_AREA);
 
-    return out;
+    // 3. Upscale: Handled by OpenCL kernel
+    resize(u_small, u_out, gray.size(), 0, 0, INTER_NEAREST);
+
+    // 4. Return as Mat (implicitly moves data back to CPU RAM)
+    return u_out.getMat(ACCESS_READ).clone();
 }
 
 
@@ -112,7 +135,7 @@ pair<double, Mat> focus_score(const Mat& img, int block_size = 6, int threshold_
     if (img.channels() == 3) cvtColor(img, gray, COLOR_BGR2GRAY);
     else if (img.channels() == 4) cvtColor(img, gray, COLOR_BGRA2GRAY);
     else gray = img;
-        
+    
     Mat out_img = increase_contrast(gray, "clahe");
     out_img = block_average_gray(out_img, block_size);
     out_img = threshold_to_black(out_img, threshold_val);
