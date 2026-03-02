@@ -10,6 +10,7 @@
 using namespace cv;
 using namespace std;
 
+namespace fs = std::filesystem;
 cv::TickMeter cvtimer;
 
 
@@ -133,7 +134,6 @@ pair<double, Mat> focus_score(const Mat& img, int block_size = 6, int threshold_
 
 
 
-namespace fs = std::filesystem;
 
 // Struct to hold our ranking data
 struct ImageScore {
