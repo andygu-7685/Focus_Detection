@@ -213,6 +213,7 @@ vector<pair<string, double>> process_folder(
     return output;
 }
 
+//Pybind
 PYBIND11_MODULE(my_module, m) {
     m.def("process_folder", &process_folder, 
           "Processes a folder of images and returns ranked scores",
