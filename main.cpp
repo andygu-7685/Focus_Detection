@@ -1,6 +1,8 @@
 #include <opencv2/core.hpp>    // Basic OpenCV structures (cv::Mat)
 #include <opencv2/imgproc.hpp> // Image processing (drawing, resizing)
 #include <opencv2/highgui.hpp> // GUI (imshow, namedWindow)
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -11,6 +13,7 @@ using namespace cv;
 using namespace std;
 
 namespace fs = std::filesystem;
+namespace py = pybind11;
 cv::TickMeter cvtimer;
 
 
@@ -164,61 +167,57 @@ struct ImageScore {
     double score;
 };
 
-int main(int argc, char** argv) {
-    if (argc < 2) { print_usage(argv[0]); return 1; }
-
-    string input_folder = argv[1];
-    string output_folder = "output_images"; // Default output folder
-    int block_size = 6;
-    int threshold_val = 180;
-
-    // Parse arguments
-    for (int i = 2; i < argc; ++i) {
-        string a = argv[i];
-        if (a == "--out" && i + 1 < argc) { output_folder = argv[++i]; }
-        else if (a == "--block-size" && i + 1 < argc) { block_size = stoi(argv[++i]); }
-        else if (a == "--threshold" && i + 1 < argc) { threshold_val = stoi(argv[++i]); }
-    }
-
-    // Create output directory if it doesn't exist
+vector<pair<string, double>> process_folder(
+    string input_folder, 
+    string output_folder = "output_images", 
+    int block_size = 6, 
+    int threshold_val = 180
+) {
+    // 1. Create output directory
     if (!fs::exists(output_folder)) {
         fs::create_directories(output_folder);
     }
 
     vector<ImageScore> rankings;
 
-    // Iterate through all files in the folder
+    // 2. Iterate and Process
     for (const auto& entry : fs::directory_iterator(input_folder)) {
         if (entry.is_regular_file()) {
             string path = entry.path().string();
             string filename = entry.path().filename().string();
 
             Mat img = imread(path, IMREAD_UNCHANGED);
-            if (img.empty()) continue; // Skip non-image files
+            if (img.empty()) continue; 
 
-            // Process the image
+            // Your focus_score logic
             pair<double, Mat> result = focus_score(img, block_size, threshold_val);
             
-            // Store the score
             rankings.push_back({filename, result.first});
 
-            // Save the processed image to the output folder
             string out_path = output_folder + "/" + entry.path().stem().string() + "_processed.png";
             imwrite(out_path, result.second);
         }
     }
 
-    // Sort rankings from largest to smallest score
+    // 3. Sort
     sort(rankings.begin(), rankings.end(), [](const ImageScore& a, const ImageScore& b) {
         return a.score > b.score;
     });
 
-    // Output the ranked list
-    cout << "\n--- Ranked Images (Highest Score First) ---\n";
-    cout << fixed << setprecision(2);
+    // 4. Convert to a Python-friendly format (Vector of Pairs)
+    vector<pair<string, double>> output;
     for (const auto& item : rankings) {
-        cout << item.filename << " : " << item.score << "%" << endl;
+        output.push_back({item.filename, item.score});
     }
 
-    return 0;
+    return output;
+}
+
+PYBIND11_MODULE(my_module, m) {
+    m.def("process_folder", &process_folder, 
+          "Processes a folder of images and returns ranked scores",
+          py::arg("input_folder"),
+          py::arg("output_folder") = "output_images",
+          py::arg("block_size") = 6,
+          py::arg("threshold_val") = 180);
 }

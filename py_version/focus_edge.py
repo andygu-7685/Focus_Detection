@@ -116,7 +116,6 @@ def build_parser():
 
 
 def main():
-    cvtimer.start()
     args = build_parser().parse_args()
 
     img = cv2.imread(args.image, cv2.IMREAD_UNCHANGED)
@@ -129,12 +128,14 @@ def main():
     else:
         gray = img
 
+    cvtimer.start()
     out_img = increase_contrast(gray, method='clahe', clip_limit=4.0, tile_grid_size=(8, 8))
     out_img = block_average_gray(out_img, block_size=args.block_size)
     out_img = threshold_to_black(out_img, thresh=args.threshold)
     non_black_pixel = count_non_black_pixels(out_img)
 
     print(f'Non-black pixels: {non_black_pixel * 100/ 3000:.2f}%')
+    cvtimer.stop()
     if non_black_pixel * 100/ 3000 > 100:
         print('The Camera is focused')
     elif non_black_pixel * 100/ 3000 > 75:
@@ -142,7 +143,7 @@ def main():
     else:
         print('The Camera is likely not focused')
 
-    cvtimer.stop()
+    
     print(f"Time in milliseconds: {cvtimer.getTimeMilli()}")
 
 
