@@ -32,6 +32,20 @@ option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
 
 include(FetchContent)
+
+
+set(BUILD_LIST "core,imgproc,imgcodecs" CACHE STRING "" FORCE)
+
+# 2. Disable heavy 3rd-party dependencies to speed up the build
+set(WITH_TIFF OFF CACHE BOOL "" FORCE)
+set(WITH_OPENEXR OFF CACHE BOOL "" FORCE)
+set(WITH_JASPER OFF CACHE BOOL "" FORCE)
+set(WITH_WEBP OFF CACHE BOOL "" FORCE)
+set(WITH_OPENCL OFF CACHE BOOL "" FORCE)
+set(WITH_IPP OFF CACHE BOOL "" FORCE)
+set(WITH_ITT OFF CACHE BOOL "" FORCE)
+set(WITH_QUIRC OFF CACHE BOOL "" FORCE)
+
 # 1. Set options to skip the "heavy" parts of OpenCV during the build
 set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(BUILD_TESTS OFF CACHE BOOL "" FORCE)
@@ -48,7 +62,6 @@ set(BUILD_opencv_gapi OFF CACHE BOOL "" FORCE)
 set(BUILD_opencv_ml OFF CACHE BOOL "" FORCE)
 set(BUILD_opencv_objdetect OFF CACHE BOOL "" FORCE)
 set(BUILD_opencv_photo OFF CACHE BOOL "" FORCE)
-
 
 # 2. Declare OpenCV
 FetchContent_Declare(opencv
@@ -117,7 +130,7 @@ set_target_properties(my_module PROPERTIES
 target_link_libraries(my_module PRIVATE     
     opencv_core 
     opencv_imgproc 
-    opencv_highgui
+    #opencv_highgui
     opencv_imgcodecs
     pybind11::module
 )
@@ -131,7 +144,7 @@ target_include_directories(my_module PRIVATE
     ${opencv_SOURCE_DIR}/include
     ${opencv_SOURCE_DIR}/modules/imgproc/include
     ${opencv_SOURCE_DIR}/modules/imgcodecs/include
-    ${opencv_SOURCE_DIR}/modules/highgui/include
+    #${opencv_SOURCE_DIR}/modules/highgui/include
     ${opencv_BINARY_DIR}
 )
 

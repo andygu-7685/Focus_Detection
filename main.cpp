@@ -1,6 +1,7 @@
 #include <opencv2/core.hpp>    // Basic OpenCV structures (cv::Mat)
 #include <opencv2/imgproc.hpp> // Image processing (drawing, resizing)
-#include <opencv2/highgui.hpp> // GUI (imshow, namedWindow)
+//#include <opencv2/highgui.hpp> // GUI (imshow, namedWindow)
+#include <opencv2/imgcodecs.hpp> // Image file reading/writing (imread, imwrite)
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <iostream>
@@ -214,7 +215,7 @@ vector<pair<string, double>> process_folder(
 }
 
 //Pybind
-PYBIND11_MODULE(my_module, m) {
+PYBIND11_MODULE(focus_algo, m) {
     m.def("process_folder", &process_folder, 
           "Processes a folder of images and returns ranked scores",
           py::arg("input_folder"),
