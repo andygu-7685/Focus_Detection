@@ -14,6 +14,14 @@ namespace fs = std::filesystem;
 cv::TickMeter cvtimer;
 
 
+// recursive
+// find the best picture out of the folder
+// imporve memory time
+// run on large folders
+//
+
+
+
 
 static int count_non_black_pixels(const Mat &img) {
     if (img.empty()) return 0;
