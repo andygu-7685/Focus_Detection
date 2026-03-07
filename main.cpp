@@ -14,11 +14,7 @@ namespace fs = std::filesystem;
 cv::TickMeter cvtimer;
 
 
-// recursive
-// find the best picture out of the folder
-// imporve memory time
-// run on large folders
-//
+
 
 
 
@@ -37,26 +33,6 @@ static int count_non_black_pixels(const Mat &img) {
     return count;
 }
 
-
-
-// static Mat block_average_gray(const Mat &gray, int block_size = 6) {
-//     CV_Assert(gray.type() == CV_8UC1);
-//     int bs = std::max(1, block_size);
-
-//     // Calculate the size of the reduced image
-//     Size smallSize(gray.cols / bs, gray.rows / bs);
-//     if (smallSize.width == 0 || smallSize.height == 0) return gray.clone();
-
-//     // 1. Downscale: INTER_AREA is mathematically equivalent to your 'mean' loop
-//     Mat small;
-//     resize(gray, small, smallSize, 0, 0, INTER_AREA);
-
-//     // 2. Upscale: INTER_NEAREST stretches those averages back into blocks
-//     Mat out;
-//     resize(small, out, gray.size(), 0, 0, INTER_NEAREST);
-
-//     return out;
-// }
 
 
 static Mat block_average_gray(const Mat &gray, int block_size = 6) {
