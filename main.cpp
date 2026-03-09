@@ -136,17 +136,58 @@ pair<double, Mat> focus_score(const Mat& img, int block_size = 6, int threshold_
 
 
 
-
-
-
-
-
-
 // Struct to hold our ranking data
 struct ImageScore {
     string filename;
     double score;
 };
+
+
+void batch_focus_evaluation(string input_folder, string output_folder, int block_size = 6, int threshold_val = 180){
+    cout << "\nCurrent Folder: " << input_folder << "\n";
+
+    vector<ImageScore> rankings;
+    // Iterate through all files in the folder
+    for (const auto& entry : fs::directory_iterator(input_folder)) {
+        if (entry.is_regular_file() && (entry.path().extension().string() == ".png" ||
+                                       entry.path().extension().string() == ".jpg" ||
+                                       entry.path().extension().string() == ".jpeg")) {
+            string path = entry.path().string();
+            string filename = entry.path().filename().string();
+
+            Mat img = imread(path, IMREAD_UNCHANGED);
+            if (img.empty()) continue; // Skip non-image files
+
+            // Process the image
+            pair<double, Mat> result = focus_score(img, block_size, threshold_val);
+            
+            // Store the score
+            rankings.push_back({filename, result.first});
+
+            // Save the processed image to the output folder
+            string out_path = output_folder + "/" + entry.path().stem().string() + "_processed.png";
+            imwrite(out_path, result.second);
+        }
+        else if(entry.is_directory()) {
+            batch_focus_evaluation(entry.path().string(), output_folder, block_size, threshold_val);
+        }
+    }
+
+    // Sort rankings from largest to smallest score
+    sort(rankings.begin(), rankings.end(), [](const ImageScore& a, const ImageScore& b) {
+        return a.score > b.score;
+    });
+
+    // Output the ranked list
+    if(rankings.empty()) return;
+    cout << "\n--- Ranked Images (Highest Score First) ---\n";
+    cout << fixed << setprecision(2);
+    for (const auto& item : rankings) {
+        cout << item.filename << " : " << item.score << "%" << endl;
+    }
+}
+
+
 
 int main(int argc, char** argv) {
     if (argc < 2) { print_usage(argv[0]); return 1; }
@@ -169,40 +210,7 @@ int main(int argc, char** argv) {
         fs::create_directories(output_folder);
     }
 
-    vector<ImageScore> rankings;
-
-    // Iterate through all files in the folder
-    for (const auto& entry : fs::directory_iterator(input_folder)) {
-        if (entry.is_regular_file()) {
-            string path = entry.path().string();
-            string filename = entry.path().filename().string();
-
-            Mat img = imread(path, IMREAD_UNCHANGED);
-            if (img.empty()) continue; // Skip non-image files
-
-            // Process the image
-            pair<double, Mat> result = focus_score(img, block_size, threshold_val);
-            
-            // Store the score
-            rankings.push_back({filename, result.first});
-
-            // Save the processed image to the output folder
-            string out_path = output_folder + "/" + entry.path().stem().string() + "_processed.png";
-            imwrite(out_path, result.second);
-        }
-    }
-
-    // Sort rankings from largest to smallest score
-    sort(rankings.begin(), rankings.end(), [](const ImageScore& a, const ImageScore& b) {
-        return a.score > b.score;
-    });
-
-    // Output the ranked list
-    cout << "\n--- Ranked Images (Highest Score First) ---\n";
-    cout << fixed << setprecision(2);
-    for (const auto& item : rankings) {
-        cout << item.filename << " : " << item.score << "%" << endl;
-    }
+    batch_focus_evaluation(input_folder, output_folder, block_size, threshold_val);
 
     return 0;
 }
