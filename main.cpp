@@ -1,6 +1,7 @@
 #include <opencv2/core.hpp>    // Basic OpenCV structures (cv::Mat)
 #include <opencv2/imgproc.hpp> // Image processing (drawing, resizing)
 #include <opencv2/highgui.hpp> // GUI (imshow, namedWindow)
+#include <opencv2/core/ocl.hpp>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -59,6 +60,64 @@ static Mat block_average_gray(const Mat &gray, int block_size = 6) {
 
 
 
+static Mat convolve_stride(const Mat &img, const Mat &kernel, int jmp_size = 4) {
+    // Output size will be roughly half
+    int kernel_size = kernel.rows;
+    Mat out(img.rows / jmp_size, img.cols / jmp_size, img.type());
+
+    for (int y = 0; y < out.rows; y++) {
+        for (int x = 0; x < out.cols; x++) {
+            // Map output (x,y) to input (x*2, y*2)
+            Rect roi(x * jmp_size, y * jmp_size, kernel_size, kernel_size);
+            
+            // Boundary check: ensure the 6x6 neighborhood fits
+            if (roi.x + kernel_size <= img.cols && roi.y + kernel_size <= img.rows) {
+                Mat neighborhood = img(roi);
+                // Multiply neighborhood by kernel and sum
+                // (Using dot product for efficiency)
+                Mat neighborhood_float;
+                neighborhood.convertTo(neighborhood_float, CV_32F);
+                float sum = neighborhood_float.dot(kernel);
+                out.at<uchar>(y, x) = saturate_cast<uchar>(sum);
+            }
+        }
+    }
+    return out;
+}
+
+Mat getLaplacianOfGaussian13x13() {
+    int size = 13;
+    // Sigma controls the width of the positive peak. 
+    // For an 11x11 spot, a sigma of ~2.0 is ideal.
+    double sigma = 1.5; 
+    Mat kernel(size, size, CV_32F);
+    
+    float sum = 0;
+    int center = size / 2;
+
+    for (int y = 0; y < size; y++) {
+        for (int x = 0; x < size; x++) {
+            float dx = x - center;
+            float dy = y - center;
+            // LoG Formula: -(1/(pi*sigma^4)) * (1 - (x^2+y^2)/(2*sigma^2)) * exp(-(x^2+y^2)/(2*sigma^2))
+            float r2 = dx*dx + dy*dy;
+            float s2 = sigma*sigma;
+            float val = (1.0f - r2 / (2.0f * s2)) * exp(-r2 / (2.0f * s2));
+            kernel.at<float>(y, x) = val;
+            sum += val;
+        }
+    }
+
+    // Force the sum to 0 so the background stays black
+    // We subtract the average error from every pixel
+    float offset = sum / (size * size);
+    kernel -= offset;
+
+    return kernel;
+}
+
+
+
 static Ptr<CLAHE> global_clahe = createCLAHE(4.0, Size(8,8));
 
 static Mat increase_contrast(const Mat &image, const string &method = "clahe") {
@@ -66,6 +125,7 @@ static Mat increase_contrast(const Mat &image, const string &method = "clahe") {
     
     // 1. If it's already grayscale, proceed
     if (image.channels() == 1) {
+
         // 2. Upload CPU Mat to GPU UMat
         // This is where the data moves to the Intel Graphics memory
         UMat u_gray = image.getUMat(ACCESS_READ);
@@ -121,11 +181,20 @@ pair<double, Mat> focus_score(const Mat& img, int block_size = 6, int threshold_
     else gray = img;
     
     Mat out_img = increase_contrast(gray, "clahe");
-    out_img = block_average_gray(out_img, block_size);
-    out_img = threshold_to_black(out_img, threshold_val);
 
-    int non_black_pixel = count_non_black_pixels(out_img);
-    double pct = non_black_pixel * 100.0 / 3000.0;
+    if(true) {
+        Mat blurred;
+        GaussianBlur(out_img, blurred, Size(5, 5), 0);
+        // 1. Create a simple 6x6 averaging kernel
+        Mat kernel = getLaplacianOfGaussian13x13();
+        out_img = convolve_stride(blurred, kernel);
+    } else {
+        out_img = block_average_gray(out_img, block_size);
+        out_img = threshold_to_black(out_img, threshold_val);
+    }
+
+    //int non_black_pixel = count_non_black_pixels(out_img);
+    double pct = 1; //non_black_pixel * 100.0 / 3000.0;
     cout.setf(std::ios::fixed); cout.precision(2);
 
     cvtimer.stop();
@@ -149,11 +218,12 @@ struct ImageScore {
 };
 
 int main(int argc, char** argv) {
-    if (argc < 2) { print_usage(argv[0]); return 1; }
+    //if (argc < 2) { print_usage(argv[0]); return 1; }
+    cv::setUseOptimized(false);
 
-    string input_folder = argv[1];
+    string input_folder = "C:\\Users\\USER\\Documents\\Research\\Focus_Algo\\Stack2"; //argv[1];
     string output_folder = "output_images"; // Default output folder
-    int block_size = 6;
+    int block_size = 13;
     int threshold_val = 180;
 
     // Parse arguments
