@@ -1,0 +1,71 @@
+Time in milli: 366.09
+Time in milli: 186.86
+Time in milli: 136.62
+
+--- Ranked Images (Highest Score First) ---
+diag_X_V59.210.png : 194.40%
+diag_X+1_V60.210.png : 52.80%
+diag_X-1_V58.210.png : 51.60%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200301\Q2
+Time in milli: 149.12
+Time in milli: 127.87
+Time in milli: 170.78
+
+--- Ranked Images (Highest Score First) ---
+diag_X_V51.810.png : 135.60%
+diag_X+1_V52.810.png : 37.20%
+diag_X-1_V50.810.png : 19.20%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200301\Q3
+Time in milli: 172.05
+Time in milli: 174.89
+Time in milli: 158.52
+
+--- Ranked Images (Highest Score First) ---
+diag_X_V56.200.png : 61.20%
+diag_X-1_V55.200.png : 15.60%
+diag_X+1_V57.200.png : 7.20%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200301\Q4
+Time in milli: 130.20
+Time in milli: 152.67
+Time in milli: 178.78
+
+--- Ranked Images (Highest Score First) ---
+diag_X_V55.240.png : 78.00%
+diag_X-1_V54.240.png : 37.20%
+diag_X+1_V56.240.png : 31.20%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200337
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200337\Q1
+Time in milli: 141.60
+Time in milli: 150.72
+Time in milli: 160.49
+
+--- Ranked Images (Highest Score First) ---
+diag_X+1_V59.210.png : 205.20%
+diag_X_V58.210.png : 64.80%
+diag_X-1_V57.210.png : 20.40%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200337\Q2
+Time in milli: 137.24
+Time in milli: 145.89
+Time in milli: 193.81
+
+--- Ranked Images (Highest Score First) ---
+diag_X_V51.810.png : 132.00%
+diag_X+1_V52.810.png : 31.20%
+diag_X-1_V50.810.png : 28.80%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200337\Q3
+Time in milli: 174.67
+Time in milli: 159.31
+Time in milli: 134.00
+
+--- Ranked Images (Highest Score First) ---
+diag_X+1_V56.200.png : 63.60%
+diag_X_V55.200.png : 9.60%
+diag_X-1_V54.200.png : 8.40%
+

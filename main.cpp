@@ -1,6 +1,7 @@
 #include <opencv2/core.hpp>    // Basic OpenCV structures (cv::Mat)
 #include <opencv2/imgproc.hpp> // Image processing (drawing, resizing)
 #include <opencv2/highgui.hpp> // GUI (imshow, namedWindow)
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -112,8 +113,8 @@ static void print_usage(const char* prog) {
 
 pair<double, Mat> focus_score(const Mat& img, int block_size = 6, int threshold_val = 180) {
 
-    cvtimer.reset();
-    cvtimer.start();
+    // cvtimer.reset();
+    // cvtimer.start();
 
     Mat gray;
     if (img.channels() == 3) cvtColor(img, gray, COLOR_BGR2GRAY);
@@ -128,9 +129,9 @@ pair<double, Mat> focus_score(const Mat& img, int block_size = 6, int threshold_
     double pct = non_black_pixel * 100.0 / 3000.0;
     cout.setf(std::ios::fixed); cout.precision(2);
 
-    cvtimer.stop();
+    // cvtimer.stop();
 
-    cout << "Time in milli: " << cvtimer.getTimeMilli() << endl;
+    //cout << "Time in milli: " << cvtimer.getTimeMilli() << endl;
     return make_pair(pct, out_img);
 }
 
@@ -155,7 +156,10 @@ void batch_focus_evaluation(string input_folder, string output_folder, int block
             string path = entry.path().string();
             string filename = entry.path().filename().string();
 
-            Mat img = imread(path, IMREAD_UNCHANGED);
+            cvtimer.reset();
+            cvtimer.start();
+
+            Mat img = imread(path, IMREAD_GRAYSCALE);
             if (img.empty()) continue; // Skip non-image files
 
             // Process the image
@@ -167,6 +171,9 @@ void batch_focus_evaluation(string input_folder, string output_folder, int block
             // Save the processed image to the output folder
             string out_path = output_folder + "/" + entry.path().stem().string() + "_processed.png";
             imwrite(out_path, result.second);
+
+            cvtimer.stop();
+            cout << "Time in milli: " << cvtimer.getTimeMilli() << endl;
         }
         else if(entry.is_directory()) {
             batch_focus_evaluation(entry.path().string(), output_folder, block_size, threshold_val);
@@ -192,6 +199,7 @@ void batch_focus_evaluation(string input_folder, string output_folder, int block
 int main(int argc, char** argv) {
     if (argc < 2) { print_usage(argv[0]); return 1; }
 
+
     string input_folder = argv[1];
     string output_folder = "output_images"; // Default output folder
     int block_size = 6;
@@ -211,6 +219,7 @@ int main(int argc, char** argv) {
     }
 
     batch_focus_evaluation(input_folder, output_folder, block_size, threshold_val);
+
 
     return 0;
 }

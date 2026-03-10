@@ -1,0 +1,444 @@
+Time in milli: 366.09
+Time in milli: 186.86
+Time in milli: 136.62
+
+--- Ranked Images (Highest Score First) ---
+diag_X_V59.210.png : 194.40%
+diag_X+1_V60.210.png : 52.80%
+diag_X-1_V58.210.png : 51.60%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200301\Q2
+Time in milli: 149.12
+Time in milli: 127.87
+Time in milli: 170.78
+
+--- Ranked Images (Highest Score First) ---
+diag_X_V51.810.png : 135.60%
+diag_X+1_V52.810.png : 37.20%
+diag_X-1_V50.810.png : 19.20%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200301\Q3
+Time in milli: 172.05
+Time in milli: 174.89
+Time in milli: 158.52
+
+--- Ranked Images (Highest Score First) ---
+diag_X_V56.200.png : 61.20%
+diag_X-1_V55.200.png : 15.60%
+diag_X+1_V57.200.png : 7.20%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200301\Q4
+Time in milli: 130.20
+Time in milli: 152.67
+Time in milli: 178.78
+
+--- Ranked Images (Highest Score First) ---
+diag_X_V55.240.png : 78.00%
+diag_X-1_V54.240.png : 37.20%
+diag_X+1_V56.240.png : 31.20%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200337
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200337\Q1
+Time in milli: 141.60
+Time in milli: 150.72
+Time in milli: 160.49
+
+--- Ranked Images (Highest Score First) ---
+diag_X+1_V59.210.png : 205.20%
+diag_X_V58.210.png : 64.80%
+diag_X-1_V57.210.png : 20.40%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200337\Q2
+Time in milli: 137.24
+Time in milli: 145.89
+Time in milli: 193.81
+
+--- Ranked Images (Highest Score First) ---
+diag_X_V51.810.png : 132.00%
+diag_X+1_V52.810.png : 31.20%
+diag_X-1_V50.810.png : 28.80%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200337\Q3
+Time in milli: 174.67
+Time in milli: 159.31
+Time in milli: 134.00
+
+--- Ranked Images (Highest Score First) ---
+diag_X+1_V56.200.png : 63.60%
+diag_X_V55.200.png : 9.60%
+diag_X-1_V54.200.png : 8.40%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200337\Q4
+Time in milli: 174.50
+Time in milli: 146.57
+Time in milli: 171.89
+
+--- Ranked Images (Highest Score First) ---
+diag_X-1_V55.240.png : 67.20%
+diag_X+1_V57.240.png : 32.40%
+diag_X_V56.240.png : 28.80%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200443
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200443\Q1
+Time in milli: 174.46
+Time in milli: 176.90
+Time in milli: 190.16
+
+--- Ranked Images (Highest Score First) ---
+diag_X_V59.210.png : 200.40%
+diag_X+1_V60.210.png : 49.20%
+diag_X-1_V58.210.png : 48.00%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200443\Q2
+Time in milli: 224.60
+Time in milli: 240.91
+Time in milli: 114.24
+
+--- Ranked Images (Highest Score First) ---
+diag_X-1_V51.810.png : 135.60%
+diag_X_V52.810.png : 33.60%
+diag_X+1_V53.810.png : 27.60%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200443\Q3
+Time in milli: 141.52
+Time in milli: 144.11
+Time in milli: 169.92
+
+--- Ranked Images (Highest Score First) ---
+diag_X+1_V56.200.png : 54.00%
+diag_X_V55.200.png : 13.20%
+diag_X-1_V54.200.png : 7.20%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200443\Q4
+Time in milli: 177.35
+Time in milli: 180.12
+Time in milli: 148.18
+
+--- Ranked Images (Highest Score First) ---
+diag_X-1_V55.240.png : 81.60%
+diag_X_V56.240.png : 24.00%
+diag_X+1_V57.240.png : 18.00%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200516
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200516\Q1
+Time in milli: 112.94
+Time in milli: 136.22
+Time in milli: 163.99
+
+--- Ranked Images (Highest Score First) ---
+diag_X-1_V59.210.png : 189.60%
+diag_X_V60.210.png : 54.00%
+diag_X+1_V61.210.png : 25.20%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200516\Q2
+Time in milli: 173.79
+Time in milli: 145.97
+Time in milli: 119.56
+
+--- Ranked Images (Highest Score First) ---
+diag_X-1_V52.810.png : 22.80%
+diag_X_V53.810.png : 22.80%
+diag_X+1_V54.810.png : 13.20%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200516\Q3
+Time in milli: 118.58
+Time in milli: 147.89
+Time in milli: 170.83
+
+--- Ranked Images (Highest Score First) ---
+diag_X+1_V56.200.png : 78.00%
+diag_X-1_V54.200.png : 4.80%
+diag_X_V55.200.png : 4.80%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200516\Q4
+Time in milli: 168.24
+Time in milli: 176.77
+Time in milli: 173.34
+
+--- Ranked Images (Highest Score First) ---
+diag_X+1_V58.240.png : 34.80%
+diag_X_V57.240.png : 26.40%
+diag_X-1_V56.240.png : 22.80%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200615
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200615\Q1
+Time in milli: 160.43
+Time in milli: 120.61
+Time in milli: 143.94
+
+--- Ranked Images (Highest Score First) ---
+diag_X_V59.020.png : 205.20%
+diag_X-1_V58.020.png : 63.60%
+diag_X+1_V60.020.png : 51.60%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200615\Q2
+Time in milli: 121.77
+Time in milli: 162.09
+Time in milli: 156.28
+
+--- Ranked Images (Highest Score First) ---
+diag_X_V51.700.png : 126.00%
+diag_X+1_V52.700.png : 31.20%
+diag_X-1_V50.700.png : 30.00%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200615\Q3
+Time in milli: 120.57
+Time in milli: 151.20
+Time in milli: 153.33
+
+--- Ranked Images (Highest Score First) ---
+diag_X_V55.900.png : 57.60%
+diag_X-1_V54.900.png : 21.60%
+diag_X+1_V56.900.png : 14.40%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200615\Q4
+Time in milli: 172.86
+Time in milli: 170.93
+Time in milli: 175.50
+
+--- Ranked Images (Highest Score First) ---
+diag_X_V54.890.png : 46.80%
+diag_X-1_V53.890.png : 42.00%
+diag_X+1_V55.890.png : 39.60%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200650
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200650\Q1
+Time in milli: 190.22
+Time in milli: 182.92
+Time in milli: 232.27
+
+--- Ranked Images (Highest Score First) ---
+diag_X_V59.020.png : 186.00%
+diag_X+1_V60.020.png : 74.40%
+diag_X-1_V58.020.png : 43.20%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200650\Q2
+Time in milli: 153.89
+Time in milli: 169.16
+Time in milli: 129.81
+
+--- Ranked Images (Highest Score First) ---
+diag_X+1_V51.700.png : 117.60%
+diag_X-1_V49.700.png : 20.40%
+diag_X_V50.700.png : 18.00%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200650\Q3
+Time in milli: 153.11
+Time in milli: 144.79
+Time in milli: 175.99
+
+--- Ranked Images (Highest Score First) ---
+diag_X-1_V55.900.png : 51.60%
+diag_X_V56.900.png : 19.20%
+diag_X+1_V57.900.png : 14.40%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200650\Q4
+Time in milli: 128.47
+Time in milli: 121.89
+Time in milli: 164.49
+
+--- Ranked Images (Highest Score First) ---
+diag_X+1_V55.890.png : 45.60%
+diag_X-1_V53.890.png : 36.00%
+diag_X_V54.890.png : 36.00%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200731
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200731\Q1
+Time in milli: 158.13
+Time in milli: 175.39
+Time in milli: 172.17
+
+--- Ranked Images (Highest Score First) ---
+diag_X+1_V59.020.png : 40.80%
+diag_X-1_V57.020.png : 1.20%
+diag_X_V58.020.png : 1.20%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200731\Q2
+Time in milli: 149.80
+Time in milli: 222.43
+Time in milli: 200.14
+
+--- Ranked Images (Highest Score First) ---
+diag_X+1_V50.700.png : 1.20%
+diag_X-1_V48.700.png : 0.00%
+diag_X_V49.700.png : 0.00%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200731\Q3
+Time in milli: 253.40
+Time in milli: 176.04
+Time in milli: 184.65
+
+--- Ranked Images (Highest Score First) ---
+diag_X-1_V55.900.png : 8.40%
+diag_X_V56.900.png : 1.20%
+diag_X+1_V57.900.png : 0.00%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200731\Q4
+Time in milli: 121.68
+Time in milli: 130.06
+Time in milli: 136.03
+
+--- Ranked Images (Highest Score First) ---
+diag_X_V54.890.png : 7.20%
+diag_X+1_V55.890.png : 3.60%
+diag_X-1_V53.890.png : 3.60%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_201026
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_201026\Q1
+Time in milli: 171.83
+Time in milli: 113.37
+Time in milli: 135.30
+
+--- Ranked Images (Highest Score First) ---
+diag_X_V59.020.png : 135.60%
+diag_X+1_V60.020.png : 48.00%
+diag_X-1_V58.020.png : 25.20%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_201026\Q2
+Time in milli: 156.78
+Time in milli: 146.49
+Time in milli: 191.86
+
+--- Ranked Images (Highest Score First) ---
+diag_X_V51.850.png : 108.00%
+diag_X-1_V50.850.png : 21.60%
+diag_X+1_V52.850.png : 15.60%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_201026\Q3
+Time in milli: 118.02
+Time in milli: 151.30
+Time in milli: 167.98
+
+--- Ranked Images (Highest Score First) ---
+diag_X_V56.180.png : 38.40%
+diag_X+1_V57.180.png : 3.60%
+diag_X-1_V55.180.png : 1.20%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_201026\Q4
+Time in milli: 129.10
+Time in milli: 122.13
+Time in milli: 140.08
+
+--- Ranked Images (Highest Score First) ---
+diag_X_V55.240.png : 51.60%
+diag_X-1_V54.240.png : 22.80%
+diag_X+1_V56.240.png : 21.60%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_201100
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_201100\Q1
+Time in milli: 149.22
+Time in milli: 134.56
+Time in milli: 182.82
+
+--- Ranked Images (Highest Score First) ---
+diag_X_V59.020_Q1.png : 121.20%
+diag_X+1_V60.020_Q1.png : 57.60%
+diag_X-1_V58.020_Q1.png : 25.20%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_201100\Q2
+Time in milli: 175.25
+Time in milli: 175.53
+Time in milli: 138.47
+
+--- Ranked Images (Highest Score First) ---
+diag_X-1_V51.850_Q2.png : 102.00%
+diag_X_V52.850_Q2.png : 13.20%
+diag_X+1_V53.850_Q2.png : 9.60%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_201100\Q3
+Time in milli: 163.66
+Time in milli: 159.82
+Time in milli: 183.39
+
+--- Ranked Images (Highest Score First) ---
+diag_X_V56.180_Q3.png : 45.60%
+diag_X+1_V57.180_Q3.png : 4.80%
+diag_X-1_V55.180_Q3.png : 1.20%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_201100\Q4
+Time in milli: 214.21
+Time in milli: 168.03
+Time in milli: 146.49
+
+--- Ranked Images (Highest Score First) ---
+diag_X-1_V55.240_Q4.png : 49.20%
+diag_X+1_V57.240_Q4.png : 20.40%
+diag_X_V56.240_Q4.png : 16.80%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_201145
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_201145\Q1
+Time in milli: 138.80
+Time in milli: 115.99
+Time in milli: 146.93
+
+--- Ranked Images (Highest Score First) ---
+diag_X+1_V59.020.png : 102.00%
+diag_X_V58.020.png : 19.20%
+diag_X-1_V57.020.png : 13.20%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_201145\Q2
+Time in milli: 136.98
+Time in milli: 128.41
+Time in milli: 143.17
+
+--- Ranked Images (Highest Score First) ---
+diag_X-1_V52.850.png : 14.40%
+diag_X+1_V54.850.png : 12.00%
+diag_X_V53.850.png : 9.60%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_201145\Q3
+Time in milli: 140.71
+Time in milli: 142.90
+Time in milli: 110.80
+
+--- Ranked Images (Highest Score First) ---
+diag_X-1_V56.180.png : 49.20%
+diag_X_V57.180.png : 3.60%
+diag_X+1_V58.180.png : 1.20%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_201145\Q4
+Time in milli: 125.99
+Time in milli: 160.74
+Time in milli: 123.61
+
+--- Ranked Images (Highest Score First) ---
+diag_X-1_V56.240.png : 25.20%
+diag_X+1_V58.240.png : 19.20%
+diag_X_V57.240.png : 19.20%
+diag_X+1_V58.180.png : 1.20%
+diag_X+1_V58.180.png : 1.20%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_201145\Q4
+Time in milli: 125.99
+Time in milli: 160.74
+Time in milli: 123.61
+
+diag_X+1_V58.180.png : 1.20%
+
+Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_201145\Q4
+Time in milli: 125.99
+Time in milli: 160.74
+Time in milli: 123.61
+
+--- Ranked Images (Highest Score First) ---
+Time in milli: 125.99
+Time in milli: 160.74
+Time in milli: 123.61
+
+Time in milli: 123.61
+
+--- Ranked Images (Highest Score First) ---
+diag_X-1_V56.240.png : 25.20%
+diag_X+1_V58.240.png : 19.20%
+diag_X-1_V56.240.png : 25.20%
+diag_X+1_V58.240.png : 19.20%
+diag_X_V57.240.png : 19.20%
