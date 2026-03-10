@@ -7,6 +7,11 @@
 #include <string>
 #include <cmath>
 #include <filesystem>
+#include <thread>
+#include <queue>
+#include <mutex>
+#include <condition_variable>
+#include <iomanip>
 
 using namespace cv;
 using namespace std;
@@ -143,54 +148,74 @@ struct ImageScore {
     double score;
 };
 
+// producer/consumer queue and synchronization
+queue<pair<string, cv::Mat>> imageQueue;
+mutex queue_mtx;
+condition_variable queue_cv;
+bool done_loading = false;
 
-void batch_focus_evaluation(string input_folder, string output_folder, int block_size = 6, int threshold_val = 180){
-    cout << "\nCurrent Folder: " << input_folder << "\n";
+vector<ImageScore> rankings;
+mutex rankings_mtx;
 
-    vector<ImageScore> rankings;
-    // Iterate through all files in the folder
-    for (const auto& entry : fs::directory_iterator(input_folder)) {
-        if (entry.is_regular_file() && (entry.path().extension().string() == ".png" ||
-                                       entry.path().extension().string() == ".jpg" ||
-                                       entry.path().extension().string() == ".jpeg")) {
-            string path = entry.path().string();
-            string filename = entry.path().filename().string();
+// producer thread reads files recursively and pushes them into the queue
+void producer(const string& input_folder) {
+    for (const auto& entry : fs::recursive_directory_iterator(input_folder)) {
+        if (entry.is_regular_file()) {
+            string ext = entry.path().extension().string();
+            std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
+            if (ext == ".png" || ext == ".jpg" || ext == ".jpeg") {
+                string path = entry.path().string();
+                string filename = entry.path().filename().string();
+                Mat img = imread(path, IMREAD_GRAYSCALE);
+                if (img.empty()) continue;
 
-            cvtimer.reset();
-            cvtimer.start();
-
-            Mat img = imread(path, IMREAD_GRAYSCALE);
-            if (img.empty()) continue; // Skip non-image files
-
-            // Process the image
-            pair<double, Mat> result = focus_score(img, block_size, threshold_val);
-            
-            // Store the score
-            rankings.push_back({filename, result.first});
-
-            // Save the processed image to the output folder
-            string out_path = output_folder + "/" + entry.path().stem().string() + "_processed.png";
-            imwrite(out_path, result.second);
-
-            cvtimer.stop();
-            cout << "Time in milli: " << cvtimer.getTimeMilli() << endl;
-        }
-        else if(entry.is_directory()) {
-            batch_focus_evaluation(entry.path().string(), output_folder, block_size, threshold_val);
+                {
+                    lock_guard<mutex> lk(queue_mtx);
+                    imageQueue.push({filename, img});
+                }
+                queue_cv.notify_one();
+            }
         }
     }
 
-    // Sort rankings from largest to smallest score
-    sort(rankings.begin(), rankings.end(), [](const ImageScore& a, const ImageScore& b) {
-        return a.score > b.score;
-    });
+    // signal consumers that loading is finished
+    {
+        lock_guard<mutex> lk(queue_mtx);
+        done_loading = true;
+    }
+    queue_cv.notify_all();
+}
 
-    // Output the ranked list
-    if(rankings.empty()) return;
-    cout << "\n--- Ranked Images (Highest Score First) ---\n";
-    cout << fixed << setprecision(2);
-    for (const auto& item : rankings) {
-        cout << item.filename << " : " << item.score << "%" << endl;
+// consumer threads pull images off the queue and process them
+void consumer(const string& output_folder, int block_size, int threshold_val) {
+    while (true) {
+        pair<string, cv::Mat> image_pair;
+        {
+            unique_lock<mutex> lk(queue_mtx);
+            queue_cv.wait(lk, []{ return !imageQueue.empty() || done_loading; });
+            if (imageQueue.empty() && done_loading)
+                break;
+            image_pair = imageQueue.front();
+            imageQueue.pop();
+        }
+
+        const string& filename = image_pair.first;
+        Mat img = image_pair.second;
+
+        cvtimer.reset(); cvtimer.start();
+        auto result = focus_score(img, block_size, threshold_val);
+        double score = result.first;
+        Mat processed = result.second;
+        cvtimer.stop();
+        std::cout << "Time in milli: " << cvtimer.getTimeMilli() << endl;
+
+        {
+            lock_guard<mutex> lk(rankings_mtx);
+            rankings.push_back({filename, score});
+        }
+
+        string out_path = output_folder + "/" + filename.substr(0, filename.find_last_of(".")) + "_processed.png";
+        imwrite(out_path, processed);
     }
 }
 
@@ -218,8 +243,28 @@ int main(int argc, char** argv) {
         fs::create_directories(output_folder);
     }
 
-    batch_focus_evaluation(input_folder, output_folder, block_size, threshold_val);
+    // start producer and a pool of consumer threads
+    thread prod(producer, input_folder);
+    unsigned int nworkers = max(1u, thread::hardware_concurrency());
+    vector<thread> workers;
+    for (unsigned int i = 0; i < nworkers; ++i)
+        workers.emplace_back(consumer, output_folder, block_size, threshold_val);
 
+    prod.join();
+    for (auto &t : workers) t.join();
+
+    // after all processing, sort and display rankings
+    sort(rankings.begin(), rankings.end(), [](const ImageScore& a, const ImageScore& b) {
+        return a.score > b.score;
+    });
+
+    if (!rankings.empty()) {
+        cout << "\n--- Ranked Images (Highest Score First) ---\n";
+        cout << fixed << setprecision(2);
+        for (const auto& item : rankings) {
+            cout << item.filename << " : " << item.score << "%" << endl;
+        }
+    }
 
     return 0;
 }
