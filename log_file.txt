@@ -1,71 +1,120 @@
-Time in milli: 366.09
-Time in milli: 186.86
-Time in milli: 136.62
-
---- Ranked Images (Highest Score First) ---
-diag_X_V59.210.png : 194.40%
-diag_X+1_V60.210.png : 52.80%
-diag_X-1_V58.210.png : 51.60%
-
-Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200301\Q2
-Time in milli: 149.12
-Time in milli: 127.87
-Time in milli: 170.78
-
---- Ranked Images (Highest Score First) ---
-diag_X_V51.810.png : 135.60%
-diag_X+1_V52.810.png : 37.20%
-diag_X-1_V50.810.png : 19.20%
-
-Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200301\Q3
-Time in milli: 172.05
-Time in milli: 174.89
-Time in milli: 158.52
-
---- Ranked Images (Highest Score First) ---
-diag_X_V56.200.png : 61.20%
-diag_X-1_V55.200.png : 15.60%
-diag_X+1_V57.200.png : 7.20%
-
-Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200301\Q4
-Time in milli: 130.20
-Time in milli: 152.67
-Time in milli: 178.78
-
---- Ranked Images (Highest Score First) ---
-diag_X_V55.240.png : 78.00%
-diag_X-1_V54.240.png : 37.20%
-diag_X+1_V56.240.png : 31.20%
-
-Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200337
-
-Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200337\Q1
-Time in milli: 141.60
-Time in milli: 150.72
-Time in milli: 160.49
-
---- Ranked Images (Highest Score First) ---
-diag_X+1_V59.210.png : 205.20%
-diag_X_V58.210.png : 64.80%
-diag_X-1_V57.210.png : 20.40%
-
-Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200337\Q2
-Time in milli: 137.24
-Time in milli: 145.89
-Time in milli: 193.81
-
---- Ranked Images (Highest Score First) ---
-diag_X_V51.810.png : 132.00%
-diag_X+1_V52.810.png : 31.20%
-diag_X-1_V50.810.png : 28.80%
-
-Current Folder: C:/Users/USER/Downloads/AF_Stacks_HITscope\AF_Stacks_20251006_200337\Q3
-Time in milli: 174.67
-Time in milli: 159.31
-Time in milli: 134.00
-
---- Ranked Images (Highest Score First) ---
-diag_X+1_V56.200.png : 63.60%
-diag_X_V55.200.png : 9.60%
-diag_X-1_V54.200.png : 8.40%
-
+diag_X_V59.210.png : 194.40%  V=59.21  x=0  Q=1  time=124.51ms  folder=AF_Stacks_20251006_200301\Q1
+diag_X+1_V60.210.png : 52.80%  V=60.21  x=1  Q=1  time=472.93ms  folder=AF_Stacks_20251006_200301\Q1
+diag_X-1_V58.210.png : 51.60%  V=58.21  x=-1  Q=1  time=92.93ms  folder=AF_Stacks_20251006_200301\Q1
+diag_X_V51.810.png : 135.60%  V=51.81  x=0  Q=2  time=131.95ms  folder=AF_Stacks_20251006_200301\Q2
+diag_X+1_V52.810.png : 37.20%  V=52.81  x=1  Q=2  time=134.59ms  folder=AF_Stacks_20251006_200301\Q2
+diag_X-1_V50.810.png : 19.20%  V=50.81  x=-1  Q=2  time=130.32ms  folder=AF_Stacks_20251006_200301\Q2
+diag_X_V56.200.png : 61.20%  V=56.20  x=0  Q=3  time=88.12ms  folder=AF_Stacks_20251006_200301\Q3
+diag_X-1_V55.200.png : 15.60%  V=55.20  x=-1  Q=3  time=165.73ms  folder=AF_Stacks_20251006_200301\Q3
+diag_X+1_V57.200.png : 7.20%  V=57.20  x=1  Q=3  time=180.97ms  folder=AF_Stacks_20251006_200301\Q3
+diag_X_V55.240.png : 78.00%  V=55.24  x=0  Q=4  time=87.08ms  folder=AF_Stacks_20251006_200301\Q4
+diag_X-1_V54.240.png : 37.20%  V=54.24  x=-1  Q=4  time=87.40ms  folder=AF_Stacks_20251006_200301\Q4
+diag_X+1_V56.240.png : 31.20%  V=56.24  x=1  Q=4  time=92.78ms  folder=AF_Stacks_20251006_200301\Q4
+diag_X+1_V59.210.png : 205.20%  V=59.21  x=1  Q=1  time=93.01ms  folder=AF_Stacks_20251006_200337\Q1
+diag_X_V58.210.png : 64.80%  V=58.21  x=0  Q=1  time=94.06ms  folder=AF_Stacks_20251006_200337\Q1
+diag_X-1_V57.210.png : 20.40%  V=57.21  x=-1  Q=1  time=92.58ms  folder=AF_Stacks_20251006_200337\Q1
+diag_X_V51.810.png : 132.00%  V=51.81  x=0  Q=2  time=140.26ms  folder=AF_Stacks_20251006_200337\Q2
+diag_X+1_V52.810.png : 31.20%  V=52.81  x=1  Q=2  time=106.26ms  folder=AF_Stacks_20251006_200337\Q2
+diag_X-1_V50.810.png : 28.80%  V=50.81  x=-1  Q=2  time=123.93ms  folder=AF_Stacks_20251006_200337\Q2
+diag_X+1_V56.200.png : 63.60%  V=56.20  x=1  Q=3  time=168.76ms  folder=AF_Stacks_20251006_200337\Q3
+diag_X_V55.200.png : 9.60%  V=55.20  x=0  Q=3  time=111.29ms  folder=AF_Stacks_20251006_200337\Q3
+diag_X-1_V54.200.png : 8.40%  V=54.20  x=-1  Q=3  time=78.34ms  folder=AF_Stacks_20251006_200337\Q3
+diag_X-1_V55.240.png : 67.20%  V=55.24  x=-1  Q=4  time=88.47ms  folder=AF_Stacks_20251006_200337\Q4
+diag_X+1_V57.240.png : 32.40%  V=57.24  x=1  Q=4  time=131.62ms  folder=AF_Stacks_20251006_200337\Q4
+diag_X_V56.240.png : 28.80%  V=56.24  x=0  Q=4  time=94.25ms  folder=AF_Stacks_20251006_200337\Q4
+diag_X_V59.210.png : 200.40%  V=59.21  x=0  Q=1  time=119.61ms  folder=AF_Stacks_20251006_200443\Q1
+diag_X+1_V60.210.png : 49.20%  V=60.21  x=1  Q=1  time=126.37ms  folder=AF_Stacks_20251006_200443\Q1
+diag_X-1_V58.210.png : 48.00%  V=58.21  x=-1  Q=1  time=139.33ms  folder=AF_Stacks_20251006_200443\Q1
+diag_X-1_V51.810.png : 135.60%  V=51.81  x=-1  Q=2  time=138.08ms  folder=AF_Stacks_20251006_200443\Q2
+diag_X_V52.810.png : 33.60%  V=52.81  x=0  Q=2  time=92.81ms  folder=AF_Stacks_20251006_200443\Q2
+diag_X+1_V53.810.png : 27.60%  V=53.81  x=1  Q=2  time=94.18ms  folder=AF_Stacks_20251006_200443\Q2
+diag_X+1_V56.200.png : 54.00%  V=56.20  x=1  Q=3  time=125.99ms  folder=AF_Stacks_20251006_200443\Q3
+diag_X_V55.200.png : 13.20%  V=55.20  x=0  Q=3  time=99.10ms  folder=AF_Stacks_20251006_200443\Q3
+diag_X-1_V54.200.png : 7.20%  V=54.20  x=-1  Q=3  time=86.07ms  folder=AF_Stacks_20251006_200443\Q3
+diag_X-1_V55.240.png : 81.60%  V=55.24  x=-1  Q=4  time=91.95ms  folder=AF_Stacks_20251006_200443\Q4
+diag_X_V56.240.png : 24.00%  V=56.24  x=0  Q=4  time=92.93ms  folder=AF_Stacks_20251006_200443\Q4
+diag_X+1_V57.240.png : 18.00%  V=57.24  x=1  Q=4  time=129.21ms  folder=AF_Stacks_20251006_200443\Q4
+diag_X-1_V59.210.png : 189.60%  V=59.21  x=-1  Q=1  time=91.21ms  folder=AF_Stacks_20251006_200516\Q1
+diag_X_V60.210.png : 54.00%  V=60.21  x=0  Q=1  time=83.03ms  folder=AF_Stacks_20251006_200516\Q1
+diag_X+1_V61.210.png : 25.20%  V=61.21  x=1  Q=1  time=104.21ms  folder=AF_Stacks_20251006_200516\Q1
+diag_X-1_V52.810.png : 22.80%  V=52.81  x=-1  Q=2  time=87.19ms  folder=AF_Stacks_20251006_200516\Q2
+diag_X_V53.810.png : 22.80%  V=53.81  x=0  Q=2  time=95.96ms  folder=AF_Stacks_20251006_200516\Q2
+diag_X+1_V54.810.png : 13.20%  V=54.81  x=1  Q=2  time=94.14ms  folder=AF_Stacks_20251006_200516\Q2
+diag_X+1_V56.200.png : 78.00%  V=56.20  x=1  Q=3  time=112.90ms  folder=AF_Stacks_20251006_200516\Q3
+diag_X-1_V54.200.png : 4.80%  V=54.20  x=-1  Q=3  time=86.69ms  folder=AF_Stacks_20251006_200516\Q3
+diag_X_V55.200.png : 4.80%  V=55.20  x=0  Q=3  time=96.67ms  folder=AF_Stacks_20251006_200516\Q3
+diag_X+1_V58.240.png : 34.80%  V=58.24  x=1  Q=4  time=99.76ms  folder=AF_Stacks_20251006_200516\Q4
+diag_X_V57.240.png : 26.40%  V=57.24  x=0  Q=4  time=93.35ms  folder=AF_Stacks_20251006_200516\Q4
+diag_X-1_V56.240.png : 22.80%  V=56.24  x=-1  Q=4  time=87.81ms  folder=AF_Stacks_20251006_200516\Q4
+diag_X_V59.020.png : 205.20%  V=59.02  x=0  Q=1  time=99.03ms  folder=AF_Stacks_20251006_200615\Q1
+diag_X-1_V58.020.png : 63.60%  V=58.02  x=-1  Q=1  time=89.41ms  folder=AF_Stacks_20251006_200615\Q1
+diag_X+1_V60.020.png : 51.60%  V=60.02  x=1  Q=1  time=100.22ms  folder=AF_Stacks_20251006_200615\Q1
+diag_X_V51.700.png : 126.00%  V=51.70  x=0  Q=2  time=125.24ms  folder=AF_Stacks_20251006_200615\Q2
+diag_X+1_V52.700.png : 31.20%  V=52.70  x=1  Q=2  time=128.76ms  folder=AF_Stacks_20251006_200615\Q2
+diag_X-1_V50.700.png : 30.00%  V=50.70  x=-1  Q=2  time=86.08ms  folder=AF_Stacks_20251006_200615\Q2
+diag_X_V55.900.png : 57.60%  V=55.90  x=0  Q=3  time=96.44ms  folder=AF_Stacks_20251006_200615\Q3
+diag_X-1_V54.900.png : 21.60%  V=54.90  x=-1  Q=3  time=84.35ms  folder=AF_Stacks_20251006_200615\Q3
+diag_X+1_V56.900.png : 14.40%  V=56.90  x=1  Q=3  time=159.02ms  folder=AF_Stacks_20251006_200615\Q3
+diag_X_V54.890.png : 46.80%  V=54.89  x=0  Q=4  time=82.39ms  folder=AF_Stacks_20251006_200615\Q4
+diag_X-1_V53.890.png : 42.00%  V=53.89  x=-1  Q=4  time=107.28ms  folder=AF_Stacks_20251006_200615\Q4
+diag_X+1_V55.890.png : 39.60%  V=55.89  x=1  Q=4  time=111.87ms  folder=AF_Stacks_20251006_200615\Q4
+diag_X_V59.020.png : 186.00%  V=59.02  x=0  Q=1  time=89.19ms  folder=AF_Stacks_20251006_200650\Q1
+diag_X+1_V60.020.png : 74.40%  V=60.02  x=1  Q=1  time=86.61ms  folder=AF_Stacks_20251006_200650\Q1
+diag_X-1_V58.020.png : 43.20%  V=58.02  x=-1  Q=1  time=81.17ms  folder=AF_Stacks_20251006_200650\Q1
+diag_X+1_V51.700.png : 117.60%  V=51.70  x=1  Q=2  time=132.38ms  folder=AF_Stacks_20251006_200650\Q2
+diag_X-1_V49.700.png : 20.40%  V=49.70  x=-1  Q=2  time=79.59ms  folder=AF_Stacks_20251006_200650\Q2
+diag_X_V50.700.png : 18.00%  V=50.70  x=0  Q=2  time=106.39ms  folder=AF_Stacks_20251006_200650\Q2
+diag_X-1_V55.900.png : 51.60%  V=55.90  x=-1  Q=3  time=93.99ms  folder=AF_Stacks_20251006_200650\Q3
+diag_X_V56.900.png : 19.20%  V=56.90  x=0  Q=3  time=110.04ms  folder=AF_Stacks_20251006_200650\Q3
+diag_X+1_V57.900.png : 14.40%  V=57.90  x=1  Q=3  time=101.83ms  folder=AF_Stacks_20251006_200650\Q3
+diag_X+1_V55.890.png : 45.60%  V=55.89  x=1  Q=4  time=128.01ms  folder=AF_Stacks_20251006_200650\Q4
+diag_X-1_V53.890.png : 36.00%  V=53.89  x=-1  Q=4  time=97.99ms  folder=AF_Stacks_20251006_200650\Q4
+diag_X_V54.890.png : 36.00%  V=54.89  x=0  Q=4  time=86.00ms  folder=AF_Stacks_20251006_200650\Q4
+diag_X+1_V59.020.png : 40.80%  V=59.02  x=1  Q=1  time=120.02ms  folder=AF_Stacks_20251006_200731\Q1
+diag_X-1_V57.020.png : 1.20%  V=57.02  x=-1  Q=1  time=118.26ms  folder=AF_Stacks_20251006_200731\Q1
+diag_X_V58.020.png : 1.20%  V=58.02  x=0  Q=1  time=110.18ms  folder=AF_Stacks_20251006_200731\Q1
+diag_X+1_V50.700.png : 1.20%  V=50.70  x=1  Q=2  time=120.16ms  folder=AF_Stacks_20251006_200731\Q2
+diag_X-1_V48.700.png : 0.00%  V=48.70  x=-1  Q=2  time=95.36ms  folder=AF_Stacks_20251006_200731\Q2
+diag_X_V49.700.png : 0.00%  V=49.70  x=0  Q=2  time=91.34ms  folder=AF_Stacks_20251006_200731\Q2
+diag_X-1_V55.900.png : 8.40%  V=55.90  x=-1  Q=3  time=148.42ms  folder=AF_Stacks_20251006_200731\Q3
+diag_X_V56.900.png : 1.20%  V=56.90  x=0  Q=3  time=84.59ms  folder=AF_Stacks_20251006_200731\Q3
+diag_X+1_V57.900.png : 0.00%  V=57.90  x=1  Q=3  time=116.51ms  folder=AF_Stacks_20251006_200731\Q3
+diag_X_V54.890.png : 7.20%  V=54.89  x=0  Q=4  time=84.49ms  folder=AF_Stacks_20251006_200731\Q4
+diag_X+1_V55.890.png : 3.60%  V=55.89  x=1  Q=4  time=118.02ms  folder=AF_Stacks_20251006_200731\Q4
+diag_X-1_V53.890.png : 3.60%  V=53.89  x=-1  Q=4  time=100.14ms  folder=AF_Stacks_20251006_200731\Q4
+diag_X_V59.020.png : 135.60%  V=59.02  x=0  Q=1  time=90.68ms  folder=AF_Stacks_20251006_201026\Q1
+diag_X+1_V60.020.png : 48.00%  V=60.02  x=1  Q=1  time=129.96ms  folder=AF_Stacks_20251006_201026\Q1
+diag_X-1_V58.020.png : 25.20%  V=58.02  x=-1  Q=1  time=96.74ms  folder=AF_Stacks_20251006_201026\Q1
+diag_X_V51.850.png : 108.00%  V=51.85  x=0  Q=2  time=126.92ms  folder=AF_Stacks_20251006_201026\Q2
+diag_X-1_V50.850.png : 21.60%  V=50.85  x=-1  Q=2  time=81.39ms  folder=AF_Stacks_20251006_201026\Q2
+diag_X+1_V52.850.png : 15.60%  V=52.85  x=1  Q=2  time=85.77ms  folder=AF_Stacks_20251006_201026\Q2
+diag_X_V56.180.png : 38.40%  V=56.18  x=0  Q=3  time=100.55ms  folder=AF_Stacks_20251006_201026\Q3
+diag_X+1_V57.180.png : 3.60%  V=57.18  x=1  Q=3  time=118.82ms  folder=AF_Stacks_20251006_201026\Q3
+diag_X-1_V55.180.png : 1.20%  V=55.18  x=-1  Q=3  time=91.76ms  folder=AF_Stacks_20251006_201026\Q3
+diag_X_V55.240.png : 51.60%  V=55.24  x=0  Q=4  time=126.38ms  folder=AF_Stacks_20251006_201026\Q4
+diag_X-1_V54.240.png : 22.80%  V=54.24  x=-1  Q=4  time=87.23ms  folder=AF_Stacks_20251006_201026\Q4
+diag_X+1_V56.240.png : 21.60%  V=56.24  x=1  Q=4  time=116.62ms  folder=AF_Stacks_20251006_201026\Q4
+diag_X_V59.020_Q1.png : 121.20%  V=59.02  x=0  Q=1  time=87.01ms  folder=AF_Stacks_20251006_201100\Q1
+diag_X+1_V60.020_Q1.png : 57.60%  V=60.02  x=1  Q=1  time=129.23ms  folder=AF_Stacks_20251006_201100\Q1
+diag_X-1_V58.020_Q1.png : 25.20%  V=58.02  x=-1  Q=1  time=81.72ms  folder=AF_Stacks_20251006_201100\Q1
+diag_X-1_V51.850_Q2.png : 102.00%  V=51.85  x=-1  Q=2  time=82.85ms  folder=AF_Stacks_20251006_201100\Q2
+diag_X_V52.850_Q2.png : 13.20%  V=52.85  x=0  Q=2  time=92.64ms  folder=AF_Stacks_20251006_201100\Q2
+diag_X+1_V53.850_Q2.png : 9.60%  V=53.85  x=1  Q=2  time=98.72ms  folder=AF_Stacks_20251006_201100\Q2
+diag_X_V56.180_Q3.png : 45.60%  V=56.18  x=0  Q=3  time=122.86ms  folder=AF_Stacks_20251006_201100\Q3
+diag_X+1_V57.180_Q3.png : 4.80%  V=57.18  x=1  Q=3  time=207.64ms  folder=AF_Stacks_20251006_201100\Q3
+diag_X-1_V55.180_Q3.png : 1.20%  V=55.18  x=-1  Q=3  time=96.46ms  folder=AF_Stacks_20251006_201100\Q3
+diag_X-1_V55.240_Q4.png : 49.20%  V=55.24  x=-1  Q=4  time=128.00ms  folder=AF_Stacks_20251006_201100\Q4
+diag_X+1_V57.240_Q4.png : 20.40%  V=57.24  x=1  Q=4  time=122.04ms  folder=AF_Stacks_20251006_201100\Q4
+diag_X_V56.240_Q4.png : 16.80%  V=56.24  x=0  Q=4  time=91.92ms  folder=AF_Stacks_20251006_201100\Q4
+diag_X+1_V59.020.png : 102.00%  V=59.02  x=1  Q=1  time=128.75ms  folder=AF_Stacks_20251006_201145\Q1
+diag_X_V58.020.png : 19.20%  V=58.02  x=0  Q=1  time=80.53ms  folder=AF_Stacks_20251006_201145\Q1
+diag_X-1_V57.020.png : 13.20%  V=57.02  x=-1  Q=1  time=79.93ms  folder=AF_Stacks_20251006_201145\Q1
+diag_X-1_V52.850.png : 14.40%  V=52.85  x=-1  Q=2  time=86.25ms  folder=AF_Stacks_20251006_201145\Q2
+diag_X+1_V54.850.png : 12.00%  V=54.85  x=1  Q=2  time=105.37ms  folder=AF_Stacks_20251006_201145\Q2
+diag_X_V53.850.png : 9.60%  V=53.85  x=0  Q=2  time=83.62ms  folder=AF_Stacks_20251006_201145\Q2
+diag_X-1_V56.180.png : 49.20%  V=56.18  x=-1  Q=3  time=122.27ms  folder=AF_Stacks_20251006_201145\Q3
+diag_X_V57.180.png : 3.60%  V=57.18  x=0  Q=3  time=94.19ms  folder=AF_Stacks_20251006_201145\Q3
+diag_X+1_V58.180.png : 1.20%  V=58.18  x=1  Q=3  time=119.72ms  folder=AF_Stacks_20251006_201145\Q3
+diag_X-1_V56.240.png : 25.20%  V=56.24  x=-1  Q=4  time=88.17ms  folder=AF_Stacks_20251006_201145\Q4
+diag_X+1_V58.240.png : 19.20%  V=58.24  x=1  Q=4  time=121.77ms  folder=AF_Stacks_20251006_201145\Q4
+diag_X_V57.240.png : 19.20%  V=57.24  x=0  Q=4  time=97.64ms  folder=AF_Stacks_20251006_201145\Q4

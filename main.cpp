@@ -7,6 +7,7 @@
 #include <string>
 #include <cmath>
 #include <filesystem>
+#include <regex>
 
 using namespace cv;
 using namespace std;
@@ -140,14 +141,23 @@ pair<double, Mat> focus_score(const Mat& img, int block_size = 6, int threshold_
 // Struct to hold our ranking data
 struct ImageScore {
     string filename;
+    string folder;
+    double voltage;
     double score;
+    double time_ms;
+    int quarter;
+    int x_type;
 };
 
 
 void batch_focus_evaluation(string input_folder, string output_folder, int block_size = 6, int threshold_val = 180){
-    cout << "\nCurrent Folder: " << input_folder << "\n";
+    //cout << "\nCurrent Folder: " << input_folder << "\n";
 
     vector<ImageScore> rankings;
+    // precompile some regexes used for extracting properties
+    std::regex file_re(R"(diag_(X(?:\+1|\-1)?)_V([\d\.]+))");
+    std::regex quarter_re(R"(Q([1-4]))");
+
     // Iterate through all files in the folder
     for (const auto& entry : fs::directory_iterator(input_folder)) {
         if (entry.is_regular_file() && (entry.path().extension().string() == ".png" ||
@@ -159,21 +169,41 @@ void batch_focus_evaluation(string input_folder, string output_folder, int block
             cvtimer.reset();
             cvtimer.start();
 
-            Mat img = imread(path, IMREAD_GRAYSCALE);
+            Mat img = imread(path, IMREAD_UNCHANGED);
             if (img.empty()) continue; // Skip non-image files
 
             // Process the image
             pair<double, Mat> result = focus_score(img, block_size, threshold_val);
-            
-            // Store the score
-            rankings.push_back({filename, result.first});
+
+            cvtimer.stop();
+            double time_ms = cvtimer.getTimeMilli();
+
+            // extract properties from filename
+            double voltage = 0.0;
+            int x_type = 0; // 0 = X, 1 = X+1, -1 = X-1
+            std::smatch fm;
+            if (std::regex_search(filename, fm, file_re)) {
+                string xstr = fm[1];
+                voltage = std::stod(fm[2]);
+                if (xstr == "X+1") x_type = 1;
+                else if (xstr == "X-1") x_type = -1;
+            }
+
+            // extract quarter from folder path
+            int quarter = -1;
+            std::smatch qm;
+            if (std::regex_search(input_folder, qm, quarter_re)) {
+                quarter = std::stoi(qm[1]);
+            }
+
+            // store the score and all metadata in the ImageScore struct
+            rankings.push_back({filename, input_folder, voltage, result.first, time_ms, quarter, x_type});
 
             // Save the processed image to the output folder
             string out_path = output_folder + "/" + entry.path().stem().string() + "_processed.png";
             imwrite(out_path, result.second);
 
-            cvtimer.stop();
-            cout << "Time in milli: " << cvtimer.getTimeMilli() << endl;
+            //cout << "Time in milli: " << time_ms << endl;
         }
         else if(entry.is_directory()) {
             batch_focus_evaluation(entry.path().string(), output_folder, block_size, threshold_val);
@@ -187,10 +217,16 @@ void batch_focus_evaluation(string input_folder, string output_folder, int block
 
     // Output the ranked list
     if(rankings.empty()) return;
-    cout << "\n--- Ranked Images (Highest Score First) ---\n";
+    //cout << "\n--- Ranked Images (Highest Score First) ---\n";
     cout << fixed << setprecision(2);
     for (const auto& item : rankings) {
-        cout << item.filename << " : " << item.score << "%" << endl;
+        cout << item.filename << " : " << item.score << "%"
+             << "  V=" << item.voltage
+             << "  x=" << item.x_type
+             << "  Q=" << item.quarter
+             << "  time=" << item.time_ms << "ms"
+             << "  folder=" << item.folder
+             << endl;
     }
 }
 
