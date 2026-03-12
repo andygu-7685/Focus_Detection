@@ -12,6 +12,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <iomanip>
+#include <regex>
 
 using namespace cv;
 using namespace std;
@@ -158,20 +159,6 @@ static Mat threshold_to_black(const Mat &img, int thresh = 150) {
 
 
 
-// static Mat threshold_to_black(const Mat &img, int thresh = 150) {
-//     if (img.empty()) return img;
-//     Mat out = img.clone();
-//     if (out.channels() != 3) {
-//         // single channel
-//         for (int y = 0; y < out.rows; ++y) {
-//             uchar* p = out.ptr<uchar>(y);
-//             for (int x = 0; x < out.cols; ++x) if (p[x] < thresh) p[x] = 0;
-//         }
-//     }
-//     return out;
-// }
-
-
 
 static void print_usage(const char* prog) {
     cout << "Usage: " << prog << " <folder> [--out path] [--block-size N] [--threshold T]\n";
@@ -210,10 +197,14 @@ pair<double, Mat> focus_score(const Mat& img, int block_size = 6, int threshold_
 
 
 
-// Struct to hold our ranking data
 struct ImageScore {
     string filename;
+    string folder;
+    double voltage;
     double score;
+    double time_ms;
+    int quarter;
+    int x_type;
 };
 
 // producer/consumer queue and synchronization
@@ -239,7 +230,7 @@ void producer(const string& input_folder) {
 
                 {
                     lock_guard<mutex> lk(queue_mtx);
-                    imageQueue.push({filename, img});
+                    imageQueue.push({path, img});
                 }
                 queue_cv.notify_one();
             }
@@ -256,6 +247,11 @@ void producer(const string& input_folder) {
 
 // consumer threads pull images off the queue and process them
 void consumer(const string& output_folder, int block_size, int threshold_val) {
+
+    // precompile some regexes used for extracting properties
+    std::regex file_re(R"(diag_(X(?:\+1|\-1)?)_V([\d\.]+))");
+    std::regex quarter_re(R"(Q([1-4]))");
+
     while (true) {
         pair<string, cv::Mat> image_pair;
         {
@@ -267,9 +263,18 @@ void consumer(const string& output_folder, int block_size, int threshold_val) {
             imageQueue.pop();
         }
 
-        const string& filename = image_pair.first;
         Mat img = image_pair.second;
-        string out_path = output_folder + "/" + filename.substr(0, filename.find_last_of("."));
+        string full_path = image_pair.first;
+
+        size_t last_slash = full_path.find_last_of("/\\"); 
+        string filename = (last_slash == string::npos) ? full_path : full_path.substr(last_slash + 1);
+        string input_folder = (last_slash == string::npos) ? "" : full_path.substr(0, last_slash);
+
+        size_t last_dot = filename.find_last_of(".");
+        string base_name = (last_dot == string::npos) ? filename : filename.substr(0, last_dot);
+        string out_path = output_folder + "/" + base_name;
+
+
 
         cvtimer.reset(); 
         cvtimer.start();
@@ -277,12 +282,36 @@ void consumer(const string& output_folder, int block_size, int threshold_val) {
         auto result = focus_score(img, block_size, threshold_val, out_path);
         double score = result.first;
         Mat processed = result.second;
+
         cvtimer.stop();
-        std::cout << "Time in milli: " << cvtimer.getTimeMilli() << endl;
+        double time_ms = cvtimer.getTimeMilli();
+        std::cout << "Time in milli: " << time_ms << endl;
+
+
+
+        // extract properties from filename
+        double voltage = 0.0;
+        int x_type = 0; // 0 = X, 1 = X+1, -1 = X-1
+        std::smatch fm;
+        if (std::regex_search(filename, fm, file_re)) {
+            string xstr = fm[1];
+            voltage = std::stod(fm[2]);
+            if (xstr == "X+1") x_type = 1;
+            else if (xstr == "X-1") x_type = -1;
+        }
+
+        // extract quarter from folder path
+        int quarter = -1;
+        std::smatch qm;
+        if (std::regex_search(input_folder, qm, quarter_re)) {
+            quarter = std::stoi(qm[1]);
+        }
+
+
 
         {
             lock_guard<mutex> lk(rankings_mtx);
-            rankings.push_back({filename, score});
+            rankings.push_back({filename, input_folder, voltage, result.first, time_ms, quarter, x_type});
         }
 
     }
@@ -331,7 +360,13 @@ int main(int argc, char** argv) {
         cout << "\n--- Ranked Images (Highest Score First) ---\n";
         cout << fixed << setprecision(2);
         for (const auto& item : rankings) {
-            cout << item.filename << " : " << item.score << "%" << endl;
+            cout << item.filename << " : " << item.score << "%"
+             << "  V=" << item.voltage
+             << "  x=" << item.x_type
+             << "  Q=" << item.quarter
+             << "  time=" << item.time_ms << "ms"
+             << "  folder=" << item.folder
+             << endl;
         }
     }
 
