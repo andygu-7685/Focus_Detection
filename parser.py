@@ -3,7 +3,7 @@ import pandas as pd
 
 def parse_structured_log(file_path, output_excel):
     # This regex now captures the Score (percentage), Voltage, X, Q, Time, and Folder
-    pattern = r"diag_.*?\.png\s*:\s*([\d\.]+)%\s*V=([\d\.]+)\s*x=(-?\d+)\s*Q=(\d+)\s*time=([\d\.]+)ms\s*folder=(AF_Stacks_\d+_\d+)"
+    pattern = r"diag_.*?\.png\s*:\s*([\d\.]+)%\s*V=([\d\.]+)\s*x=(-?\d+)\s*Q=(\d+)\s*time=([\d\.]+)ms\s*folder=.*?\\(AF_Stacks_\d+_\d+)"
 
     data_rows = []
 

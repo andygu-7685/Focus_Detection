@@ -1,8 +1,10 @@
 #include <opencv2/core.hpp>    // Basic OpenCV structures (cv::Mat)
 #include <opencv2/imgproc.hpp> // Image processing (drawing, resizing)
 #include <opencv2/highgui.hpp> // GUI (imshow, namedWindow)
+#include "./includes/img_proc.h"   // Custom image processing functions
 
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <string>
 #include <cmath>
@@ -19,142 +21,12 @@ using namespace std;
 
 namespace fs = std::filesystem;
 cv::TickMeter cvtimer;
+std::ofstream logFile;
 
 
 
 
 
-
-
-static int count_non_black_pixels(const Mat &img) {
-    if (img.empty()) return 0;
-    CV_Assert(img.type() == CV_8UC1); // Ensure it's grayscale
-
-    int count = 0;
-    for (int i = 0; i < img.rows; i++) {
-        const uchar* row = img.ptr<uchar>(i);
-        for (int j = 0; j < img.cols; j++) {
-            if (row[j] != 0) count++;
-        }
-    }
-    return count;
-}
-
-
-
-
-static Mat block_average_gray(const Mat &gray, int block_size = 6) {
-    CV_Assert(gray.type() == CV_8UC1);
-    int bs = std::max(1, block_size);
-
-    // Calculate the size of the reduced image
-    Size smallSize(gray.cols / bs, gray.rows / bs);
-    if (smallSize.width == 0 || smallSize.height == 0) return gray.clone();
-
-    // 1. Move to UMat (GPU/OpenCL buffer)
-    UMat u_gray = gray.getUMat(ACCESS_READ);
-    UMat u_small, u_out;
-
-    // 2. Downscale: Handled by OpenCL kernel
-    resize(u_gray, u_small, smallSize, 0, 0, INTER_AREA);
-
-    // 3. Upscale: Handled by OpenCL kernel
-    resize(u_small, u_out, gray.size(), 0, 0, INTER_NEAREST);
-
-    // 4. Return as Mat (implicitly moves data back to CPU RAM)
-    return u_out.getMat(ACCESS_READ).clone();
-}
-
-
-
-
-
-static Mat increase_contrast(const Mat &image, const string &method = "clahe") {
-    if (image.empty()) return image;
-    
-    // 1. If it's already grayscale, proceed
-    if (image.channels() == 1) {
-        // 2. Upload CPU Mat to GPU UMat
-        // This is where the data moves to the Intel Graphics memory
-        UMat u_gray = image.getUMat(ACCESS_READ);
-        UMat u_dst;
-        Ptr<CLAHE> local_clahe = createCLAHE(4.0, Size(8,8));
-
-        //cvtimer.start();
-        
-        // 3. This execution now happens on the GPU
-        local_clahe->apply(u_gray, u_dst); 
-        
-        //cvtimer.stop();
-
-        // 4. Download result back to a CPU Mat to return it
-        Mat dst;
-        u_dst.copyTo(dst);
-        return dst;
-    }
-    
-    return image; 
-}
-
-
-// avoided AVX HAL for this function since it causes crash on intel graphics
-double get_lightest_side_average_strided(const cv::Mat& img, int row_stride = 5) {
-    if (img.empty()) return 0.0;
-
-    cv::Mat gray;
-    if (img.channels() > 1) cv::cvtColor(img, gray, cv::COLOR_BGR2GRAY);
-    else gray = img;
-
-    int mid = gray.cols / 2;
-    long long left_sum = 0;
-    long long right_sum = 0;
-    long long left_count = 0;
-    long long right_count = 0;
-
-    // Process row by row using raw pointers (bypasses AVX HAL)
-    for (int y = 0; y < gray.rows; y += row_stride) {
-        const uchar* ptr = gray.ptr<uchar>(y);
-        
-        // Manual sum for left side
-        for (int x = 0; x < mid; ++x) {
-            left_sum += ptr[x];
-            left_count++;
-        }
-
-        // Manual sum for right side
-        for (int x = mid; x < gray.cols; ++x) {
-            right_sum += ptr[x];
-            right_count++;
-        }
-    }
-
-    if (left_count == 0 || right_count == 0) return 0.0;
-
-    double left_avg = (double)left_sum / left_count;
-    double right_avg = (double)right_sum / right_count;
-
-    return std::max(left_avg, right_avg);
-}
-
-
-
-static Mat threshold_to_black(const Mat &img, int thresh = 150) {
-    if (img.empty()) return img;
-    Mat out = img.clone();
-    double lightest_side_avg = get_lightest_side_average_strided(out);
-    //cout << "Lightest side average: " << lightest_side_avg << "\n";
-    if (out.channels() != 3) {
-        // single channel
-        for (int y = 0; y < out.rows; ++y) {
-            uchar* p = out.ptr<uchar>(y);
-            for (int x = 0; x < out.cols; ++x) 
-            {
-                if (p[x] - lightest_side_avg < thresh) p[x] = 0;
-            }
-        }
-    }
-    return out;
-}
 
 
 
@@ -254,6 +126,8 @@ void consumer(const string& output_folder, int block_size, int threshold_val) {
 
     while (true) {
         pair<string, cv::Mat> image_pair;
+        cvtimer.reset(); 
+        cvtimer.start();
         {
             unique_lock<mutex> lk(queue_mtx);
             queue_cv.wait(lk, []{ return !imageQueue.empty() || done_loading; });
@@ -268,7 +142,7 @@ void consumer(const string& output_folder, int block_size, int threshold_val) {
 
         size_t last_slash = full_path.find_last_of("/\\"); 
         string filename = (last_slash == string::npos) ? full_path : full_path.substr(last_slash + 1);
-        string input_folder = (last_slash == string::npos) ? "" : full_path.substr(0, last_slash);
+        string input_folder = full_path;
 
         size_t last_dot = filename.find_last_of(".");
         string base_name = (last_dot == string::npos) ? filename : filename.substr(0, last_dot);
@@ -276,8 +150,6 @@ void consumer(const string& output_folder, int block_size, int threshold_val) {
 
 
 
-        cvtimer.reset(); 
-        cvtimer.start();
         
         auto result = focus_score(img, block_size, threshold_val, out_path);
         double score = result.first;
@@ -351,6 +223,9 @@ int main(int argc, char** argv) {
     prod.join();
     for (auto &t : workers) t.join();
 
+    // Open log file for writing
+    logFile.open("log_file.txt", std::ios::app);
+
     // after all processing, sort and display rankings
     sort(rankings.begin(), rankings.end(), [](const ImageScore& a, const ImageScore& b) {
         return a.score > b.score;
@@ -359,6 +234,7 @@ int main(int argc, char** argv) {
     if (!rankings.empty()) {
         cout << "\n--- Ranked Images (Highest Score First) ---\n";
         cout << fixed << setprecision(2);
+        if (logFile.is_open()) logFile << fixed << setprecision(2);
         for (const auto& item : rankings) {
             cout << item.filename << " : " << item.score << "%"
              << "  V=" << item.voltage
@@ -367,8 +243,18 @@ int main(int argc, char** argv) {
              << "  time=" << item.time_ms << "ms"
              << "  folder=" << item.folder
              << endl;
+            if (logFile.is_open()) {
+                logFile << item.filename << " : " << item.score << "%"
+                 << "  V=" << item.voltage
+                 << "  x=" << item.x_type
+                 << "  Q=" << item.quarter
+                 << "  time=" << item.time_ms << "ms"
+                 << "  folder=" << item.folder
+                 << endl;
+            }
         }
     }
 
+    if (logFile.is_open()) logFile.close();
     return 0;
 }
