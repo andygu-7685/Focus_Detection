@@ -87,7 +87,7 @@ void producer(const string& input_folder) {
     for (const auto& entry : fs::recursive_directory_iterator(input_folder)) {
         if (entry.is_regular_file()) {
             string ext = entry.path().extension().string();
-            std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
+            transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
             if (ext == ".png" || ext == ".jpg" || ext == ".jpeg") {
                 string path = entry.path().string();
                 string filename = entry.path().filename().string();
@@ -115,8 +115,8 @@ void producer(const string& input_folder) {
 void consumer(const string& output_folder, int block_size, int threshold_val) {
 
     // precompile some regexes used for extracting properties
-    std::regex file_re(R"(diag_(X(?:\+1|\-1)?)_V([\d\.]+))");
-    std::regex quarter_re(R"(Q([1-4]))");
+    regex file_re(R"(diag_(X(?:\+1|\-1)?)_V([\d\.]+))");
+    regex quarter_re(R"(Q([1-4]))");
 
     while (true) {
         pair<string, cv::Mat> image_pair;
@@ -152,18 +152,18 @@ void consumer(const string& output_folder, int block_size, int threshold_val) {
 
         if (DEBUG_LOG) {
             // extract voltage and x_type from filename
-            std::smatch fm;
-            if (std::regex_search(filename, fm, file_re)) {
+            smatch fm;
+            if (regex_search(filename, fm, file_re)) {
                 string xstr = fm[1];
-                voltage = std::stod(fm[2]);
+                voltage = stod(fm[2]);
                 if (xstr == "X+1") x_type = 1;
                 else if (xstr == "X-1") x_type = -1;
             }
 
             // extract quarter from folder path
-            std::smatch qm;
-            if (std::regex_search(input_folder, qm, quarter_re)) {
-                quarter = std::stoi(qm[1]);
+            smatch qm;
+            if (regex_search(input_folder, qm, quarter_re)) {
+                quarter = stoi(qm[1]);
             }
         }
 

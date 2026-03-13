@@ -22,7 +22,7 @@ int count_non_black_pixels(const Mat &img) {
 
 Mat block_average_gray(const Mat &gray, int block_size) {
     CV_Assert(gray.type() == CV_8UC1);
-    int bs = std::max(1, block_size);
+    int bs = max(1, block_size);
 
     // Calculate the size of the reduced image
     Size smallSize(gray.cols / bs, gray.rows / bs);
@@ -56,13 +56,9 @@ Mat increase_contrast(const Mat &image, const string &method) {
         UMat u_gray = image.getUMat(ACCESS_READ);
         UMat u_dst;
         Ptr<CLAHE> local_clahe = createCLAHE(4.0, Size(8,8));
-
-        //cvtimer.start();
         
         // 3. This execution now happens on the GPU
         local_clahe->apply(u_gray, u_dst); 
-        
-        //cvtimer.stop();
 
         // 4. Download result back to a CPU Mat to return it
         Mat dst;
@@ -75,11 +71,11 @@ Mat increase_contrast(const Mat &image, const string &method) {
 
 
 // avoided AVX HAL for this function since it causes crash on intel graphics
-double get_lightest_side_average_strided(const cv::Mat& img, int row_stride) {
+double get_lightest_side_average_strided(const Mat& img, int row_stride) {
     if (img.empty()) return 0.0;
 
-    cv::Mat gray;
-    if (img.channels() > 1) cv::cvtColor(img, gray, cv::COLOR_BGR2GRAY);
+    Mat gray;
+    if (img.channels() > 1) cvtColor(img, gray, COLOR_BGR2GRAY);
     else gray = img;
 
     int mid = gray.cols / 2;
@@ -110,7 +106,7 @@ double get_lightest_side_average_strided(const cv::Mat& img, int row_stride) {
     double left_avg = (double)left_sum / left_count;
     double right_avg = (double)right_sum / right_count;
 
-    return std::max(left_avg, right_avg);
+    return max(left_avg, right_avg);
 }
 
 
