@@ -23,7 +23,9 @@ namespace fs = std::filesystem;
 cv::TickMeter cvtimer;
 std::ofstream logFile;
 
-
+const bool DEBUG_IMG = false;
+const bool DEBUG_TIMER = true;
+const bool DEBUG_LOG = false;
 
 
 
@@ -40,29 +42,21 @@ static void print_usage(const char* prog) {
 
 pair<double, Mat> focus_score(const Mat& img, int block_size = 6, int threshold_val = 180, const string& out_path = "") {
 
-    // cvtimer.reset();
-    // cvtimer.start();
-
     Mat gray;
     if (img.channels() == 3) cvtColor(img, gray, COLOR_BGR2GRAY);
     else if (img.channels() == 4) cvtColor(img, gray, COLOR_BGRA2GRAY);
     else gray = img;
     
     Mat out_img = increase_contrast(gray, "clahe");
-    //imwrite(out_path + "_clahe.png", out_img);
+    if (DEBUG_IMG) imwrite(out_path + "_clahe.png", out_img);
     out_img = block_average_gray(out_img, block_size);
-    //imwrite(out_path + "_block_average.png", out_img);
+    if (DEBUG_IMG) imwrite(out_path + "_block_average.png", out_img);
     out_img = threshold_to_black(out_img, threshold_val);
-    //imwrite(out_path + "_thresholded.png", out_img);
+    if (DEBUG_IMG) imwrite(out_path + "_thresholded.png", out_img);
 
     int non_black_pixel = count_non_black_pixels(out_img);
     double pct = non_black_pixel * 100.0 / 3000.0;
     cout.setf(std::ios::fixed); cout.precision(2);
-
-    // cvtimer.stop();
-
-    //cout << "Time in milli: " << cvtimer.getTimeMilli() << endl;
-
 
     return make_pair(pct, out_img);
 }
@@ -137,6 +131,8 @@ void consumer(const string& output_folder, int block_size, int threshold_val) {
             imageQueue.pop();
         }
 
+        //------------------------------------------------------------------------------------------------------------------
+
         Mat img = image_pair.second;
         string full_path = image_pair.first;
 
@@ -148,8 +144,30 @@ void consumer(const string& output_folder, int block_size, int threshold_val) {
         string base_name = (last_dot == string::npos) ? filename : filename.substr(0, last_dot);
         string out_path = output_folder + "/" + base_name;
 
+        //------------------------------------------------------------------------------------------------------------------
+        
+        double voltage = 0.0;
+        int quarter = -1;
+        int x_type = 0; // 0 = X, 1 = X+1, -1 = X-1
 
+        if (DEBUG_LOG) {
+            // extract voltage and x_type from filename
+            std::smatch fm;
+            if (std::regex_search(filename, fm, file_re)) {
+                string xstr = fm[1];
+                voltage = std::stod(fm[2]);
+                if (xstr == "X+1") x_type = 1;
+                else if (xstr == "X-1") x_type = -1;
+            }
 
+            // extract quarter from folder path
+            std::smatch qm;
+            if (std::regex_search(input_folder, qm, quarter_re)) {
+                quarter = std::stoi(qm[1]);
+            }
+        }
+
+        //------------------------------------------------------------------------------------------------------------------
         
         auto result = focus_score(img, block_size, threshold_val, out_path);
         double score = result.first;
@@ -157,35 +175,12 @@ void consumer(const string& output_folder, int block_size, int threshold_val) {
 
         cvtimer.stop();
         double time_ms = cvtimer.getTimeMilli();
-        std::cout << "Time in milli: " << time_ms << endl;
-
-
-
-        // extract properties from filename
-        double voltage = 0.0;
-        int x_type = 0; // 0 = X, 1 = X+1, -1 = X-1
-        std::smatch fm;
-        if (std::regex_search(filename, fm, file_re)) {
-            string xstr = fm[1];
-            voltage = std::stod(fm[2]);
-            if (xstr == "X+1") x_type = 1;
-            else if (xstr == "X-1") x_type = -1;
-        }
-
-        // extract quarter from folder path
-        int quarter = -1;
-        std::smatch qm;
-        if (std::regex_search(input_folder, qm, quarter_re)) {
-            quarter = std::stoi(qm[1]);
-        }
-
-
+        if (DEBUG_TIMER) cout << "Time in milli: " << time_ms << endl;
 
         {
             lock_guard<mutex> lk(rankings_mtx);
             rankings.push_back({filename, input_folder, voltage, result.first, time_ms, quarter, x_type});
         }
-
     }
 }
 
@@ -193,7 +188,6 @@ void consumer(const string& output_folder, int block_size, int threshold_val) {
 
 int main(int argc, char** argv) {
     if (argc < 2) { print_usage(argv[0]); return 1; }
-
 
     string input_folder = argv[1];
     string output_folder = "output_images"; // Default output folder
@@ -236,14 +230,21 @@ int main(int argc, char** argv) {
         cout << fixed << setprecision(2);
         if (logFile.is_open()) logFile << fixed << setprecision(2);
         for (const auto& item : rankings) {
-            cout << item.filename << " : " << item.score << "%"
-             << "  V=" << item.voltage
-             << "  x=" << item.x_type
-             << "  Q=" << item.quarter
-             << "  time=" << item.time_ms << "ms"
-             << "  folder=" << item.folder
-             << endl;
-            if (logFile.is_open()) {
+            cout << item.filename << " : " << item.score << "%";
+            
+            if (DEBUG_LOG){
+                cout << "  V=" << item.voltage
+                << "  x=" << item.x_type
+                << "  Q=" << item.quarter
+                << "  time=" << item.time_ms << "ms"
+                << "  folder=" << item.folder
+                << endl;
+            }
+            else {
+                cout << endl;
+            }
+            
+            if (logFile.is_open() && DEBUG_LOG) {
                 logFile << item.filename << " : " << item.score << "%"
                  << "  V=" << item.voltage
                  << "  x=" << item.x_type
